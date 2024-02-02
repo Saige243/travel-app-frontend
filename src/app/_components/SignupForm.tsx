@@ -1,8 +1,43 @@
+import { FormEvent } from "react"
+import { useRouter } from "next/navigation"
+
 function SignupForm({ onSwitch }: { onSwitch: () => void }) {
+  const router = useRouter()
+
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+
+    const formData = new FormData(event.currentTarget)
+    const email = formData.get("email")
+    const password = formData.get("password")
+    const password_confirmation = formData.get("confirm-password")
+
+    const response = await fetch("http://localhost:3001/users", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        user: {
+          email,
+          password,
+          password_confirmation,
+        },
+      }),
+      credentials: "include",
+    })
+
+    if (response.ok) {
+      console.log("Signup successful")
+      // router.push("/dashboard")
+    } else {
+      // Handle errors
+      console.error("Login failed")
+    }
+  }
+
   return (
     <div className="p-8 bg-white shadow-md rounded-lg">
       <h2 className="mb-6 text-center text-2xl font-bold">Sign Up</h2>
-      <form className="space-y-4">
+      <form className="space-y-4" onSubmit={handleSubmit}>
         <div>
           <label
             htmlFor="email"

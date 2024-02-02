@@ -1,8 +1,35 @@
+import { FormEvent } from "react"
+import { useRouter } from "next/navigation"
+
 function LoginForm({ onSwitch }: { onSwitch: () => void }) {
+  const router = useRouter()
+
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+
+    const formData = new FormData(event.currentTarget)
+    const email = formData.get("email")
+    const password = formData.get("password")
+
+    const response = await fetch("http://localhost:3001/users/sign_in", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+      credentials: "include",
+    })
+
+    if (response.ok) {
+      router.push("/dashboard")
+    } else {
+      // Handle errors
+      console.error("Login failed")
+    }
+  }
+
   return (
     <div className="p-8 bg-white shadow-md rounded-lg">
       <h2 className="mb-6 text-center text-2xl font-bold">Login</h2>
-      <form className="space-y-4">
+      <form className="space-y-4" onSubmit={handleSubmit}>
         <div>
           <label
             htmlFor="email"
@@ -45,7 +72,7 @@ function LoginForm({ onSwitch }: { onSwitch: () => void }) {
         </div>
       </form>
       <div className="mt-4 text-center">
-        Don&apos;t have an account?{" "}
+        Don't have an account?{" "}
         <button
           onClick={onSwitch}
           className="text-indigo-600 hover:text-indigo-500 cursor-pointer"
