@@ -1,11 +1,12 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect, useRef } from "react"
 import { useRouter } from "next/navigation"
 
 function Navbar() {
   const router = useRouter()
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+  const dropdownRef = useRef(null)
 
   async function logout() {
     const res = await fetch("http://localhost:3001/users/sign_out", {
@@ -22,6 +23,21 @@ function Navbar() {
       setIsDropdownOpen(false)
     }
   }
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        dropdownRef.current &&
+        !(dropdownRef.current as HTMLElement).contains(event.target as Node)
+      ) {
+        setIsDropdownOpen(false)
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside)
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside)
+    }
+  }, [])
 
   return (
     <nav className="bg-blue-500 p-4 text-white flex justify-between items-center">
@@ -50,7 +66,10 @@ function Navbar() {
             </svg>
           </button>
           {isDropdownOpen && (
-            <div className="absolute right-0 z-10 mt-2 py-2 w-48 bg-white rounded-md shadow-xl">
+            <div
+              ref={dropdownRef}
+              className="absolute right-0 z-10 mt-2 py-2 w-48 bg-white rounded-md shadow-xl"
+            >
               <a
                 href="#"
                 className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-500 hover:text-white"
