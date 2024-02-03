@@ -27,7 +27,7 @@ function SignupForm({ onSwitch }: { onSwitch: () => void }) {
 
     if (response.ok) {
       console.log("Signup successful")
-      // router.push("/dashboard")
+      router.push("/dashboard")
     } else {
       // Handle errors
       console.error("Login failed")

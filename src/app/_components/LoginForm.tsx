@@ -14,15 +14,21 @@ function LoginForm({ onSwitch }: { onSwitch: () => void }) {
     const response = await fetch("http://localhost:3001/users/sign_in", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({
+        user: {
+          email: email,
+          password: password,
+        },
+      }),
       credentials: "include",
     })
 
     if (response.ok) {
+      console.log("Login successful")
       router.push("/dashboard")
     } else {
       // Handle errors
-      console.error("Login failed")
+      console.error("Login failed", response)
     }
   }
 
@@ -72,7 +78,7 @@ function LoginForm({ onSwitch }: { onSwitch: () => void }) {
         </div>
       </form>
       <div className="mt-4 text-center">
-        Don't have an account?{" "}
+        Don&apos;t have an account?{" "}
         <button
           onClick={onSwitch}
           className="text-indigo-600 hover:text-indigo-500 cursor-pointer"
