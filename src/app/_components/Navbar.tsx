@@ -41,9 +41,14 @@ function Navbar() {
 
   return (
     <nav className="bg-blue-500 p-4 text-white flex justify-between items-center">
-      <div className="font-semibold text-xl">TravelApp</div>
+      <div className="font-semibold text-xl">
+        <button onClick={() => router.push("/dashboard")}>TravelApp</button>
+      </div>
       <div>
-        <button className="bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 mr-2 px-4 rounded">
+        <button
+          onClick={() => router.push("/trips")}
+          className="bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 mr-2 px-4 rounded"
+        >
           My Trips
         </button>
         <div className="relative inline-block">
