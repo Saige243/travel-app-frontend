@@ -52,7 +52,10 @@ function Trips() {
               >
                 Go to trip
               </button>
-              <button className="bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 mt-2 px-4 rounded">
+              <button
+                onClick={() => router.push(`trips/${trip.id}/edit`)}
+                className="bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 mt-2 px-4 rounded"
+              >
                 Edit this trip
               </button>
             </li>

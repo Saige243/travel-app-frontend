@@ -15,7 +15,7 @@ function TripID() {
   const { id } = useParams()
   const [trip, setTrip] = useState<Trip | null>()
 
-  async function fetchTrips() {
+  async function fetchTrip() {
     const tripId = id
     const url = `http://localhost:3001/trips/${tripId}`
     const res = await fetch(url, { credentials: "include" })
@@ -32,10 +32,8 @@ function TripID() {
   }
 
   useEffect(() => {
-    fetchTrips()
+    fetchTrip()
   }, [])
-
-  console.log(trip)
 
   return (
     <>
