@@ -36,7 +36,7 @@ function NewTrip() {
   }
 
   return (
-    <form className="space-y-4 px-20 py-12" onSubmit={handleSubmit}>
+    <form className="space-y-4" onSubmit={handleSubmit}>
       <div>
         <label
           htmlFor="title"

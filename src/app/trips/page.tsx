@@ -42,8 +42,19 @@ function Trips() {
         <ul>
           {trips.map((trip: Trip) => (
             <li key={trip.id}>
-              {trip.title} - {trip.location} from {trip.start_date} to{" "}
-              {trip.end_date}
+              <p>
+                {trip.title} - {trip.location} from {trip.start_date} to{" "}
+              </p>
+              <p>{trip.end_date}</p>
+              <button
+                className="bg-blue-700 mr-2 hover:bg-blue-800 text-white font-bold py-2 mt-2 px-4 rounded"
+                onClick={() => router.push(`trips/${trip.id}`)}
+              >
+                Go to trip
+              </button>
+              <button className="bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 mt-2 px-4 rounded">
+                Edit this trip
+              </button>
             </li>
           ))}
         </ul>
@@ -51,7 +62,7 @@ function Trips() {
         <p>Looks like you have no trips planned!</p>
       )}
       <button
-        className="bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded"
+        className="bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 my-12 px-4 rounded"
         onClick={() => router.push("/trips/new")}
       >
         Add a Trip
