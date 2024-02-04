@@ -46,7 +46,7 @@ function EditTrip() {
 
   useEffect(() => {
     fetchTrip()
-  }, [id])
+  }, [])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -71,6 +71,7 @@ function EditTrip() {
 
     if (res.ok) {
       console.log("Trip updated successfully")
+      router.push(`/trips/${tripId}`)
     } else {
       console.error("Failed to update trip")
     }
@@ -82,10 +83,11 @@ function EditTrip() {
         <div>Loading...</div>
       ) : (
         <form onSubmit={handleSubmit}>
-          <h1>Edit Trip</h1>
+          <h1 className="pb-8">Edit Trip</h1>
           <label>
             Title:
             <input
+              className="border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 ml-2 p-1 sm:text-sm"
               type="text"
               name="title"
               value={formData.title}
@@ -96,6 +98,7 @@ function EditTrip() {
           <label>
             Location:
             <input
+              className="border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 ml-2 p-1 sm:text-sm"
               type="text"
               name="location"
               value={formData.location}
@@ -106,6 +109,7 @@ function EditTrip() {
           <label>
             Start Date:
             <input
+              className="border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 ml-2 p-1 sm:text-sm"
               type="date"
               name="start_date"
               value={formData.start_date}
@@ -116,6 +120,7 @@ function EditTrip() {
           <label>
             End Date:
             <input
+              className="border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 ml-2 p-1 sm:text-sm"
               type="date"
               name="end_date"
               value={formData.end_date}
@@ -131,7 +136,7 @@ function EditTrip() {
           </button>
           <div>
             <button
-              onClick={() => router.back()}
+              onClick={() => router.push(`trips/${trip.id}`)}
               className="bg-blue-700 ml-2 hover:bg-blue-800 text-white font-bold py-2 my-12 px-4 rounded"
             >
               Back to trip
