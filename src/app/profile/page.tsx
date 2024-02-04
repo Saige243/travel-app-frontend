@@ -5,7 +5,8 @@ import { useRouter } from "next/navigation"
 
 type User = {
   id: number
-  name: string
+  first_name: string
+  last_name: string
   email: string
 }
 
@@ -38,7 +39,10 @@ function Profile() {
       {user ? (
         <div className="space-y-2">
           <p>
-            <span className="font-medium">Name:</span> {user.name}
+            <span className="font-medium">First Name:</span> {user.first_name}
+          </p>
+          <p>
+            <span className="font-medium">Last Name:</span> {user.last_name}
           </p>
           <p>
             <span className="font-medium">Email:</span> {user.email}
