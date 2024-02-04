@@ -5,8 +5,8 @@ import { useRouter } from "next/navigation"
 
 type User = {
   id: number
-  firstName: string
-  lastName: string
+  first_name: string
+  last_name: string
   email: string
 }
 
@@ -30,8 +30,8 @@ function ProfileEdit() {
       const data: User = await response.json()
       setUser(data)
       setFormData({
-        firstName: data.firstName,
-        lastName: data.lastName,
+        firstName: data.first_name,
+        lastName: data.last_name,
         email: data.email,
       })
     } else {
