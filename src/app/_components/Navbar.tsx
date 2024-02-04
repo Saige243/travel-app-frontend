@@ -76,7 +76,7 @@ function Navbar() {
               className="absolute right-0 z-10 mt-2 py-2 w-48 bg-white rounded-md shadow-xl"
             >
               <a
-                href="#"
+                href="/profile"
                 className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-500 hover:text-white"
               >
                 Profile
