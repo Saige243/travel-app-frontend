@@ -1,36 +1,35 @@
 "use client"
 
-import React, { useState, useEffect } from "react"
-import { User } from "../types"
+import React, { useEffect, useState } from "react"
+import { useTripData } from "../_hooks/useTripData"
+import { useFetchUser } from "../_hooks/useFetchUser"
+import { Trip } from "../types"
 
 function Dashboard() {
-  const [user, setUser] = useState<User | null>(null)
-
-  const fetchUserData = async () => {
-    const response = await fetch("http://localhost:3001/profile", {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-    })
-
-    if (response.ok) {
-      const data = await response.json()
-      setUser(data)
-    } else {
-      console.error("Failed to fetch user data", response)
-    }
-  }
+  const { soonestTrip, fetchSoonestTrip, isLoading, error } = useTripData()
+  const { userData } = useFetchUser()
 
   useEffect(() => {
-    fetchUserData()
+    fetchSoonestTrip()
   }, [])
+
+  if (isLoading) return <div>Loading...</div>
+  if (error) return <div>Error: {error}</div>
+
   return (
     <div>
-      <h1>Dashboard</h1>
-      <p>Welcome to the trip dashboard, {user?.first_name}!</p>
-      <p>Here&apos;s your next trip:</p>
-
-      <div></div>
+      <h1>Hi, {userData?.first_name}!</h1>
+      <p className="pb-8">Here&apos;s your upcoming trip:</p>
+      {soonestTrip ? (
+        <div>
+          <p>{soonestTrip.title}</p>
+          <p>{soonestTrip.location}</p>
+          <p>{soonestTrip.start_date}</p>
+          <p>{soonestTrip.end_date}</p>
+        </div>
+      ) : (
+        <p>No trips found.</p>
+      )}
     </div>
   )
 }
