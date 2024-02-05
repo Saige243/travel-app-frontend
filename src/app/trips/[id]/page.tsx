@@ -54,6 +54,35 @@ function TripID() {
           </div>
         </div>
 
+        <div className="py-4">
+          <div>
+            <h2 className="text-2xl font-bold text-center py-4">
+              Packing List:
+            </h2>
+          </div>
+          <div>
+            <ul>
+              {trip?.packing_list ? (
+                trip?.packing_list.map((item, index) => (
+                  <li key={index} className="text-xl">
+                    {item}
+                  </li>
+                ))
+              ) : (
+                <div>
+                  <li className="text-xl">Your packing list is empty!</li>
+                  <button
+                    className="px-4 mt-8 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                    onClick={() => router.push(`${trip?.id}/edit/packinglist`)}
+                  >
+                    Create packing list
+                  </button>
+                </div>
+              )}
+            </ul>
+          </div>
+        </div>
+
         <div className="text-2xl text-center font-bold pb-4">
           <h2>Itenerary</h2>
         </div>
