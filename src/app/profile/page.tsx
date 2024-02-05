@@ -2,13 +2,7 @@
 
 import React, { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
-
-type User = {
-  id: number
-  first_name: string
-  last_name: string
-  email: string
-}
+import { User } from "../types"
 
 function Profile() {
   const [user, setUser] = useState<User | null>(null)

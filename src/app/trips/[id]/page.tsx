@@ -2,14 +2,7 @@
 
 import React, { useEffect, useState } from "react"
 import { useParams } from "next/navigation"
-
-type Trip = {
-  id: number
-  title: string
-  location: string
-  start_date: string
-  end_date: string
-}
+import { Trip } from "../../types"
 
 function TripID() {
   const { id } = useParams()

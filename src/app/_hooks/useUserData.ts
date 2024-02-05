@@ -1,12 +1,8 @@
-"use client"
-
-import React, { useState, useEffect } from "react"
-import { useRouter } from "next/navigation"
+import { useEffect, useState } from "react"
 import { User } from "../types"
 
-function Dashboard() {
+function useUserData() {
   const [user, setUser] = useState<User | null>(null)
-  const router = useRouter()
 
   const fetchUserData = async () => {
     const response = await fetch("http://localhost:3001/profile", {
@@ -26,15 +22,6 @@ function Dashboard() {
   useEffect(() => {
     fetchUserData()
   }, [])
-  return (
-    <div>
-      <h1>Dashboard</h1>
-      <p>Welcome to the trip dashboard, {user?.first_name}!</p>
-      <p>Here&apos;s your next trip:</p>
 
-      <div></div>
-    </div>
-  )
+  return { fetchUserData, user }
 }
-
-export default Dashboard
