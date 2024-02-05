@@ -36,7 +36,7 @@ export function useTripData() {
     }
   }
 
-  async function fetchTrip(id: number) {
+  async function fetchTrip(id: string) {
     setLoadingState(true)
     try {
       const url = `${BASE_URL}/${id}`
