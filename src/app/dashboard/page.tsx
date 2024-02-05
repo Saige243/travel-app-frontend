@@ -1,12 +1,10 @@
 "use client"
 
 import React, { useState, useEffect } from "react"
-import { useRouter } from "next/navigation"
 import { User } from "../types"
 
 function Dashboard() {
   const [user, setUser] = useState<User | null>(null)
-  const router = useRouter()
 
   const fetchUserData = async () => {
     const response = await fetch("http://localhost:3001/profile", {

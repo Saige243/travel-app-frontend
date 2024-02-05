@@ -1,45 +1,27 @@
 "use client"
 
-import React, { useEffect, useState } from "react"
+import React from "react"
 import { useRouter } from "next/navigation"
-import { User } from "../types"
+import { useFetchUser } from "../_hooks/useFetchUser"
 
 function Profile() {
-  const [user, setUser] = useState<User | null>(null)
   const router = useRouter()
-
-  const fetchUserData = async () => {
-    const response = await fetch("http://localhost:3001/profile", {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-    })
-
-    if (response.ok) {
-      const data = await response.json()
-      setUser(data)
-    } else {
-      console.error("Failed to fetch user data", response)
-    }
-  }
-
-  useEffect(() => {
-    fetchUserData()
-  }, [])
+  const { userData, isLoading } = useFetchUser()
 
   return (
     <div className="p-4">
       <h1 className="text-xl font-semibold mb-4">Profile</h1>
-      {user ? (
+      {userData && !isLoading ? (
         <div className="space-y-2">
           <p>
-            <span className="font-medium">First Name:</span> {user.first_name}
+            <span className="font-medium">First Name:</span>{" "}
+            {userData.first_name}
           </p>
           <p>
-            <span className="font-medium">Last Name:</span> {user.last_name}
+            <span className="font-medium">Last Name:</span> {userData.last_name}
           </p>
           <p>
-            <span className="font-medium">Email:</span> {user.email}
+            <span className="font-medium">Email:</span> {userData.email}
           </p>
         </div>
       ) : (
