@@ -22,7 +22,7 @@ function TripID() {
 
   return (
     <div className="mx-auto max-w-6xl">
-      <div className="text-center">
+      <div className="text-center pb-8">
         <h1 className="text-5xl font-extrabold">My {trip?.title} Trip</h1>
         <p className="text-4xl font-extrabold">{trip?.location}</p>
       </div>
@@ -30,7 +30,7 @@ function TripID() {
       <div className="flex flex-col justify-between">
         <div className="py-8">
           <div>
-            <h2 className="text-2xl font-bold text-center pb-4">Details:</h2>
+            <h2 className="text-3xl font-bold pb-4">Details:</h2>
           </div>
 
           <div className="py-2 text-xl">
@@ -57,8 +57,8 @@ function TripID() {
         <div className="py-8">
           <PackingListTable trip={trip} />
         </div>
-        <div className="text-2xl text-center font-bold pb-4">
-          <h2>Itenerary</h2>
+        <div>
+          <h2 className="text-3xl font-bold py-4">Itenerary:</h2>
         </div>
       </div>
     </div>

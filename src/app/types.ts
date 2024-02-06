@@ -19,4 +19,5 @@ export type PackingListItem = {
   id?: number
   category: string
   description: string
+  packed: boolean
 }

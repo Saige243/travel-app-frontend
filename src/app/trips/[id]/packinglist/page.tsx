@@ -1,13 +1,25 @@
-import React from "react"
-import { useRouter } from "next/navigation"
-import { PackingListItem, Trip } from "../types"
+"use client"
 
-function PackingListTable({ trip }: { trip: Trip | null }) {
+import React, { useEffect } from "react"
+import { useRouter, useParams } from "next/navigation"
+import { Trip, PackingListItem } from "../../../types"
+import { useTripData } from "../../../_hooks/useTripData"
+
+function PackingListPage() {
   const router = useRouter()
+  const { id } = useParams()
+  const { trip, fetchTrip } = useTripData()
+
+  useEffect(() => {
+    fetchTrip(id as string)
+  }, [])
+
   return (
     <div>
       <div>
-        <h2 className="text-3xl font-bold py-4">Packing List:</h2>
+        <h2 className="text-3xl font-bold py-4 pb-8">
+          Packing List for {trip?.title}
+        </h2>
       </div>
       <div>
         <div className="flex justify-between items-center font-bold text-xl md:text-2xl py-4 border-b-2">
@@ -50,7 +62,7 @@ function PackingListTable({ trip }: { trip: Trip | null }) {
                 className="px-4 mt-8 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
                 onClick={() => router.push(`${trip?.id}/edit/packinglist`)}
               >
-                Go topacking list
+                Go to packing list
               </button>
             </div>
             <div className="pt-4">
@@ -68,4 +80,4 @@ function PackingListTable({ trip }: { trip: Trip | null }) {
   )
 }
 
-export default PackingListTable
+export default PackingListPage
