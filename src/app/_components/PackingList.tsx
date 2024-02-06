@@ -167,6 +167,15 @@ function AddPackingListItemForm({ tripId }: { tripId: number }) {
         </div>
       ))}
       <div>
+        <div>
+          <button
+            type="button"
+            className="inline-flex justify-center my-4 py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green-500 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+            onClick={() => router.back()}
+          >
+            Back to trip
+          </button>
+        </div>
         <button
           type="button"
           onClick={handleAddItem}

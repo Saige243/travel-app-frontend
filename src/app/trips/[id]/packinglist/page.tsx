@@ -60,15 +60,15 @@ function PackingListPage() {
             <div className="pt-4">
               <button
                 className="px-4 mt-8 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-                onClick={() => router.push(`${trip?.id}/edit/packinglist`)}
+                onClick={() => router.back()}
               >
-                Go to packing list
+                Back to trip
               </button>
             </div>
             <div className="pt-4">
               <button
                 className="px-4 mt-8 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-                onClick={() => router.push(`${trip?.id}/edit/packinglist`)}
+                onClick={() => router.push(`edit/packinglist`)}
               >
                 Edit packing list
               </button>
