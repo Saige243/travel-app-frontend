@@ -102,7 +102,7 @@ function AddPackingListItemForm({ tripId }: { tripId: number }) {
 
         if (!response.ok) throw new Error("Network response was not ok.")
 
-        // router.push(`/trips/${tripId}`)
+        router.push(`/trips/${tripId}`)
         console.log("Item saved successfully", await response.json())
       } catch (error) {
         console.error("Failed to save item:", error)

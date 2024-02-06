@@ -4,7 +4,7 @@ import React, { useEffect } from "react"
 import { useParams, useRouter } from "next/navigation"
 import { useTripData } from "../../_hooks/useTripData"
 import { format, parseISO } from "date-fns"
-import { PackingListItem } from "../../types"
+import PackingListTable from "@/app/_components/PackingListTable"
 
 function TripID() {
   const { id } = useParams()
@@ -20,11 +20,9 @@ function TripID() {
     return format(date, "EEEE, MMMM d, yyyy")
   }
 
-  console.log("trip", trip)
-
   return (
-    <div>
-      <div className="text-center pb-16">
+    <div className="mx-auto max-w-6xl">
+      <div className="text-center">
         <h1 className="text-5xl font-extrabold">My {trip?.title} Trip</h1>
         <p className="text-4xl font-extrabold">{trip?.location}</p>
       </div>
@@ -56,48 +54,9 @@ function TripID() {
             </button>
           </div>
         </div>
-
-        <div className="py-4">
-          <div>
-            <h2 className="text-2xl font-bold text-center py-4">
-              Packing List:
-            </h2>
-          </div>
-          <div>
-            <ul>
-              {trip?.packing_list_items ? (
-                (trip.packing_list_items as PackingListItem[]).map(
-                  (item: PackingListItem) => (
-                    <li className="text-xl" key={item.category}>
-                      <p>Category: {item.category}</p>
-                      <p>Description: {item.description}</p>
-                    </li>
-                  )
-                )
-              ) : (
-                <div>
-                  <li className="text-xl">Your packing list is empty!</li>
-                  <button
-                    className="px-4 mt-8 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-                    onClick={() => router.push(`${trip?.id}/edit/packinglist`)}
-                  >
-                    Create packing list
-                  </button>
-                </div>
-              )}
-            </ul>
-            {trip?.packing_list_items &&
-              trip?.packing_list_items.length > 0 && (
-                <button
-                  className="px-4 mt-8 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-                  onClick={() => router.push(`${trip?.id}/edit/packinglist`)}
-                >
-                  Edit packing list
-                </button>
-              )}
-          </div>
+        <div className="py-8">
+          <PackingListTable trip={trip} />
         </div>
-
         <div className="text-2xl text-center font-bold pb-4">
           <h2>Itenerary</h2>
         </div>
