@@ -3,8 +3,6 @@
 import React, { useEffect, useState } from "react"
 import { useParams, useRouter } from "next/navigation"
 import { Trip } from "../../../types"
-import PackingList from "../../../_components/PackingList"
-import TripID from "../page"
 
 function EditTrip() {
   const { id } = useParams()

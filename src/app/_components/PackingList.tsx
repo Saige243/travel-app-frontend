@@ -1,3 +1,5 @@
+"use client"
+
 import React, { useEffect, useState } from "react"
 import { FormEvent } from "react"
 import { useTripData } from "../_hooks/useTripData"
@@ -55,16 +57,27 @@ function AddPackingListItemForm({ tripId }: { tripId: number }) {
     ])
   }
 
-  const handleRemoveItem = (id?: number, tempId?: string) => {
-    const updatedItems = packingListItems.filter((item) => {
-      if (id !== undefined) {
-        return item.id !== id
-      } else if (tempId !== undefined) {
-        return item.tempId !== tempId
-      }
-      return true
-    })
-    setPackingListItems(updatedItems)
+  const handleRemoveItem = async (id?: number, tempId?: string) => {
+    if (id) {
+      const url = `http://localhost:3001/trips/${tripId}/packing_list_items/${id}`
+      const response = await fetch(url, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      })
+
+      if (!response.ok) throw new Error("Network response was not ok.")
+      console.log("Item deleted successfully", await response.text())
+      const updatedItems = packingListItems.filter((item) => item.id !== id)
+      setPackingListItems(updatedItems)
+    } else {
+      const updatedItems = packingListItems.filter(
+        (item) => item.tempId !== tempId
+      )
+      setPackingListItems(updatedItems)
+    }
   }
 
   const handleSubmit = async (e: FormEvent) => {
