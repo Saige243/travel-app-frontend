@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react"
 import { FormEvent } from "react"
 import { useTripData } from "../_hooks/useTripData"
+import { useRouter } from "next/navigation"
 
-// Assuming PackingListItem is defined as:
 interface PackingListItem {
   category: string
   description: string
-  id?: number // Optional, assuming your backend assigns IDs
+  id?: number | undefined
 }
 
 function AddPackingListItemForm({ tripId }: { tripId: number }) {
   const { trip, fetchTrip } = useTripData()
+  const router = useRouter()
   const [packingListItems, setPackingListItems] = useState<PackingListItem[]>([
     { category: "", description: "" },
   ])
@@ -25,16 +26,20 @@ function AddPackingListItemForm({ tripId }: { tripId: number }) {
 
   useEffect(() => {
     fetchTrip(tripId.toString())
-  }, [tripId, fetchTrip])
+  }, [])
 
   useEffect(() => {
-    // Check if trip.packing_list_items is populated
-    if (trip?.packing_list_items?.length > 0) {
+    if (trip?.packing_list_items && trip?.packing_list_items?.length > 0) {
       setPackingListItems(trip.packing_list_items)
     }
   }, [trip])
 
-  const handleItemChange = (index: number, field: string, value: string) => {
+  const handleItemChange = (
+    index: number,
+    field: string,
+    value: string,
+    id?: number
+  ) => {
     const updatedItems = packingListItems.map((item, itemIndex) =>
       index === itemIndex ? { ...item, [field]: value } : item
     )
@@ -48,7 +53,7 @@ function AddPackingListItemForm({ tripId }: { tripId: number }) {
     ])
   }
 
-  const handleRemoveItem = (index: number) => {
+  const handleRemoveItem = (index: number | undefined) => {
     const updatedItems = packingListItems.filter(
       (_, itemIndex) => index !== itemIndex
     )
@@ -58,46 +63,48 @@ function AddPackingListItemForm({ tripId }: { tripId: number }) {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
 
-    const url = `http://localhost:3001/trips/${tripId}/packing_list_items`
-    const payload = { packing_list_items: packingListItems }
+    packingListItems.forEach(async (item) => {
+      const method = item.id ? "PATCH" : "POST"
+      const url = item.id
+        ? `http://localhost:3001/trips/${tripId}/packing_list_items/${item.id}`
+        : `http://localhost:3001/trips/${tripId}/packing_list_items`
 
-    try {
-      const response = await fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-        credentials: "include",
-      })
+      try {
+        const response = await fetch(url, {
+          method: method,
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ packing_list_item: item }),
+          credentials: "include",
+        })
 
-      if (response.ok) {
-        console.log("Packing list items saved")
-        // Optionally, clear the form or fetch the trip again to update the state
-      } else {
-        console.error("Failed to save packing list items")
+        if (!response.ok) throw new Error("Network response was not ok.")
+
+        router.push(`/trips/${tripId}`)
+        console.log("Item saved successfully", await response.json())
+      } catch (error) {
+        console.error("Failed to save item:", error)
       }
-    } catch (error) {
-      console.error("Error submitting form:", error)
-    }
+    })
   }
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       {packingListItems.map((item, index) => (
-        <div key={index} className="flex space-x-3 items-center">
+        <div key={item.id} className="flex space-x-3 items-center">
           <div className="w-1/3">
             <label
-              htmlFor={`category-${index}`}
+              htmlFor={`category-${item.id}`}
               className="block text-sm font-medium text-gray-700"
             >
               Category
             </label>
             <select
-              id={`category-${index}`}
+              id={`category-${item.id}`}
               value={item.category}
               onChange={(e) =>
-                handleItemChange(index, "category", e.target.value)
+                handleItemChange(index, "category", e.target.value, item.id)
               }
               className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             >
@@ -111,24 +118,24 @@ function AddPackingListItemForm({ tripId }: { tripId: number }) {
           </div>
           <div className="flex-1">
             <label
-              htmlFor={`description-${index}`}
+              htmlFor={`description-${item.id}`}
               className="block text-sm font-medium text-gray-700"
             >
               Description
             </label>
             <input
               type="text"
-              id={`description-${index}`}
+              id={`description-${item.id}`}
               value={item.description}
               onChange={(e) =>
-                handleItemChange(index, "description", e.target.value)
+                handleItemChange(index, "description", e.target.value, item.id)
               }
               className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             />
           </div>
           <button
             type="button"
-            onClick={() => handleRemoveItem(index)}
+            onClick={() => handleRemoveItem(item.id)}
             className="py-2 px-4 bg-red-500 text-white rounded hover:bg-red-700"
           >
             Remove
