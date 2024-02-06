@@ -10,7 +10,12 @@ export type Trip = {
   title: string
   description: string
   location: string
-  packing_list: string[]
+  packing_list_items: PackingListItem[]
   start_date: string
   end_date: string
+}
+
+export type PackingListItem = {
+  category: string
+  description: string
 }

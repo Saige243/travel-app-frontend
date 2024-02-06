@@ -4,6 +4,7 @@ import React, { useEffect } from "react"
 import { useParams, useRouter } from "next/navigation"
 import { useTripData } from "../../_hooks/useTripData"
 import { format, parseISO } from "date-fns"
+import { PackingListItem } from "../../types"
 
 function TripID() {
   const { id } = useParams()
@@ -18,6 +19,8 @@ function TripID() {
     const date = parseISO(dateString)
     return format(date, "EEEE, MMMM d, yyyy")
   }
+
+  console.log("trip", trip)
 
   return (
     <div>
@@ -62,12 +65,15 @@ function TripID() {
           </div>
           <div>
             <ul>
-              {trip?.packing_list ? (
-                trip?.packing_list.map((item, index) => (
-                  <li key={index} className="text-xl">
-                    {item}
-                  </li>
-                ))
+              {trip?.packing_list_items ? (
+                (trip.packing_list_items as PackingListItem[]).map(
+                  (item: PackingListItem) => (
+                    <li className="text-xl" key={item.category}>
+                      <p>Category: {item.category}</p>
+                      <p>Description: {item.description}</p>
+                    </li>
+                  )
+                )
               ) : (
                 <div>
                   <li className="text-xl">Your packing list is empty!</li>
