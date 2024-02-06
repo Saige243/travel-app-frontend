@@ -1,8 +1,17 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { FormEvent } from "react"
+import { useTripData } from "../_hooks/useTripData"
+
+// Assuming PackingListItem is defined as:
+interface PackingListItem {
+  category: string
+  description: string
+  id?: number // Optional, assuming your backend assigns IDs
+}
 
 function AddPackingListItemForm({ tripId }: { tripId: number }) {
-  const [packingListItems, setPackingListItems] = useState([
+  const { trip, fetchTrip } = useTripData()
+  const [packingListItems, setPackingListItems] = useState<PackingListItem[]>([
     { category: "", description: "" },
   ])
   const categories = [
@@ -13,6 +22,17 @@ function AddPackingListItemForm({ tripId }: { tripId: number }) {
     "Documents",
     "Misc.",
   ]
+
+  useEffect(() => {
+    fetchTrip(tripId.toString())
+  }, [tripId, fetchTrip])
+
+  useEffect(() => {
+    // Check if trip.packing_list_items is populated
+    if (trip?.packing_list_items?.length > 0) {
+      setPackingListItems(trip.packing_list_items)
+    }
+  }, [trip])
 
   const handleItemChange = (index: number, field: string, value: string) => {
     const updatedItems = packingListItems.map((item, itemIndex) =>
@@ -28,14 +48,18 @@ function AddPackingListItemForm({ tripId }: { tripId: number }) {
     ])
   }
 
+  const handleRemoveItem = (index: number) => {
+    const updatedItems = packingListItems.filter(
+      (_, itemIndex) => index !== itemIndex
+    )
+    setPackingListItems(updatedItems)
+  }
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
 
-    const isMultiple = packingListItems.length > 1
     const url = `http://localhost:3001/trips/${tripId}/packing_list_items`
-    const payload = isMultiple
-      ? { packing_list_items: packingListItems }
-      : { packing_list_item: packingListItems[0] }
+    const payload = { packing_list_items: packingListItems }
 
     try {
       const response = await fetch(url, {
@@ -48,8 +72,8 @@ function AddPackingListItemForm({ tripId }: { tripId: number }) {
       })
 
       if (response.ok) {
-        setPackingListItems([{ category: "", description: "" }])
         console.log("Packing list items saved")
+        // Optionally, clear the form or fetch the trip again to update the state
       } else {
         console.error("Failed to save packing list items")
       }
@@ -61,7 +85,7 @@ function AddPackingListItemForm({ tripId }: { tripId: number }) {
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       {packingListItems.map((item, index) => (
-        <div key={index} className="flex space-x-3">
+        <div key={index} className="flex space-x-3 items-center">
           <div className="w-1/3">
             <label
               htmlFor={`category-${index}`}
@@ -102,26 +126,31 @@ function AddPackingListItemForm({ tripId }: { tripId: number }) {
               className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             />
           </div>
-        </div>
-      ))}
-      <div className="space-y-4">
-        <div>
           <button
             type="button"
-            onClick={handleAddItem}
-            className="mt-2 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green-500 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+            onClick={() => handleRemoveItem(index)}
+            className="py-2 px-4 bg-red-500 text-white rounded hover:bg-red-700"
           >
-            Add Another Item
+            Remove
           </button>
         </div>
-        <div className="pt-8 ">
-          <button
-            type="submit"
-            className="mt-2 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-500 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-          >
-            Save Packing List
-          </button>
-        </div>
+      ))}
+      <div>
+        <button
+          type="button"
+          onClick={handleAddItem}
+          className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green-500 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+        >
+          Add Another Item
+        </button>
+      </div>
+      <div>
+        <button
+          type="submit"
+          className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-500 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+        >
+          Save Packing List
+        </button>
       </div>
     </form>
   )
