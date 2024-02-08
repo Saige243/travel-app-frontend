@@ -4,6 +4,7 @@ import { PackingListItem, Trip } from "../types"
 
 function PackingListTable({ trip }: { trip: Trip | null }) {
   const router = useRouter()
+
   return (
     <div>
       <div>
@@ -20,7 +21,7 @@ function PackingListTable({ trip }: { trip: Trip | null }) {
             trip.packing_list_items.map((item: PackingListItem) => (
               <li
                 key={item.id}
-                className="py-2 flex justify-between items-center text-lg"
+                className="py-2 grid grid-cols-3 justify-center items-center text-lg"
               >
                 <span className={`px-2 ${item.packed ? "line-through" : ""}`}>
                   {item.category}
@@ -28,11 +29,13 @@ function PackingListTable({ trip }: { trip: Trip | null }) {
                 <span className={`px-2 ${item.packed ? "line-through" : ""}`}>
                   {item.description}
                 </span>
-                <input
-                  type="checkbox"
-                  checked={item.packed}
-                  onChange={() => {}}
-                />
+                <div className="col-start-3 col-end-4 text-right pr-4">
+                  <input
+                    type="checkbox"
+                    checked={item.packed ?? false}
+                    readOnly
+                  />
+                </div>
               </li>
             ))
           ) : (

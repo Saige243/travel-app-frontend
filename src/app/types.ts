@@ -13,6 +13,7 @@ export type Trip = {
   packing_list_items: PackingListItem[]
   start_date: string
   end_date: string
+  accommodations: Accommodation[]
 }
 
 export type PackingListItem = {
@@ -20,4 +21,14 @@ export type PackingListItem = {
   category: string
   description: string
   packed: boolean
+}
+
+export type Accommodation = {
+  id: number
+  name: string
+  address: string
+  check_in_date: string
+  check_out_date: string
+  contact_number: string
+  notes: string[]
 }
