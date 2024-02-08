@@ -8,11 +8,53 @@ import { useTripData } from "../../../_hooks/useTripData"
 function PackingListPage() {
   const router = useRouter()
   const { id } = useParams()
+  const tripId = parseInt(id as string)
   const { trip, fetchTrip } = useTripData()
+  const [packingListItems, setPackingListItems] = React.useState<
+    PackingListItem[]
+  >([])
 
   useEffect(() => {
     fetchTrip(id as string)
-  }, [])
+  }, [packingListItems])
+
+  useEffect(() => {
+    if (trip?.packing_list_items) {
+      setPackingListItems(trip.packing_list_items)
+    }
+  }, [trip])
+
+  const handleUpdatePackedStatus = async (item: PackingListItem) => {
+    const optimisticUpdatedItems = packingListItems.map((i) =>
+      i.id === item.id ? { ...i, packed: !i.packed } : i
+    )
+    setPackingListItems(optimisticUpdatedItems)
+
+    try {
+      const url = `http://localhost:3001/trips/${tripId}/packing_list_items/${item.id}`
+      const response = await fetch(url, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({ packed: !item.packed }),
+      })
+
+      if (!response.ok) throw new Error("Network response was not ok.")
+
+      console.log("Item updated successfully", await response.json())
+    } catch (error) {
+      console.error("Failed to update item", error)
+      setPackingListItems(
+        packingListItems.map((i) =>
+          i.id === item.id ? { ...i, packed: item.packed } : i
+        )
+      )
+
+      alert("Failed to update the packing status. Please try again.")
+    }
+  }
 
   return (
     <div>
@@ -27,20 +69,26 @@ function PackingListPage() {
           <h2>Description</h2>
           <h2>Packed?</h2>
         </div>
-        <ul className="divide-y divide-gray-200">
+        <ol className="divide-y divide-gray-400 list-decimal">
           {trip?.packing_list_items && trip.packing_list_items.length > 0 ? (
             trip.packing_list_items.map((item: PackingListItem) => (
               <li
-                key={item.category}
-                className="py-2 flex justify-between items-center text-lg"
+                key={item.id}
+                className="py-2 grid grid-cols-3 justify-center items-center text-lg"
               >
-                <span>{item.category}</span>
-                <span>{item.description}</span>
-                <input
-                  type="checkbox"
-                  checked={item.packed}
-                  onChange={() => {}}
-                />
+                <span className={`px-2 ${item.packed ? "line-through" : ""}`}>
+                  {item.category}
+                </span>
+                <span className={`px-2 ${item.packed ? "line-through" : ""}`}>
+                  {item.description}
+                </span>
+                <div className="col-start-3 col-end-4 text-right pr-4">
+                  <input
+                    type="checkbox"
+                    checked={item.packed ?? false}
+                    onChange={() => handleUpdatePackedStatus(item)}
+                  />
+                </div>
               </li>
             ))
           ) : (
@@ -54,7 +102,7 @@ function PackingListPage() {
               </button>
             </div>
           )}
-        </ul>
+        </ol>
         {trip?.packing_list_items && trip.packing_list_items.length > 0 && (
           <div className="flex space-x-4">
             <div className="pt-4">

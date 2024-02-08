@@ -19,11 +19,15 @@ function PackingListTable({ trip }: { trip: Trip | null }) {
           {trip?.packing_list_items && trip.packing_list_items.length > 0 ? (
             trip.packing_list_items.map((item: PackingListItem) => (
               <li
-                key={item.category}
+                key={item.id}
                 className="py-2 flex justify-between items-center text-lg"
               >
-                <span>{item.category}</span>
-                <span>{item.description}</span>
+                <span className={`px-2 ${item.packed ? "line-through" : ""}`}>
+                  {item.category}
+                </span>
+                <span className={`px-2 ${item.packed ? "line-through" : ""}`}>
+                  {item.description}
+                </span>
                 <input
                   type="checkbox"
                   checked={item.packed}
