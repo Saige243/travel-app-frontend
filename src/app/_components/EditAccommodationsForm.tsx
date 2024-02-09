@@ -24,15 +24,20 @@ interface Trip {
 }
 
 function EditAccommodationsForm({ trip }: { trip: Trip | null }) {
-  console.log("acc trip", trip)
   const router = useRouter()
   const [accommodations, setAccommodations] = useState<
     AccommodationFormState[]
   >([])
 
   useEffect(() => {
-    trip && setAccommodations(trip?.accommodations)
-    setAccommodations(trip?.accommodations)
+    if (trip) {
+      const accommodationsArray = Array.isArray(trip.accommodations)
+        ? trip.accommodations
+        : trip.accommodations
+        ? [trip.accommodations]
+        : []
+      setAccommodations(accommodationsArray)
+    }
   }, [trip])
 
   const handleAccommodationChange = (
@@ -55,13 +60,14 @@ function EditAccommodationsForm({ trip }: { trip: Trip | null }) {
     e.preventDefault()
     const accommodation = accommodations[index]
     const response = await fetch(
-      `http://localhost:3001/trips/${id}/accommodations/${accommodation.id}`,
+      `http://localhost:3001/trips/${trip?.id}/accommodations/${accommodation.id}`,
       {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          id: accommodation.id,
           name: accommodation.name,
           address: accommodation.address,
           check_in_date: accommodation.checkInDate,
@@ -82,116 +88,120 @@ function EditAccommodationsForm({ trip }: { trip: Trip | null }) {
   return (
     <div className="pt-8">
       <h2 className="text-xl font-bold mt-8 mb-4">Edit Accommodations</h2>
-      {accommodations.map((acc, index) => (
-        <form
-          key={acc.id}
-          onSubmit={(e) => handleAccommodationSubmit(e, index)}
-          className="mb-8"
-        >
-          <div className="mb-4">
-            <label
-              htmlFor={`name-${index}`}
-              className="block font-medium text-sm mb-2"
-            >
-              Name
-            </label>
-            <input
-              id={`name-${index}`}
-              type="text"
-              name="name"
-              value={acc.name}
-              onChange={(e) => handleAccommodationChange(index, e)}
-              className="input input-bordered w-full p-2 rounded"
-            />
-          </div>
-          <div className="mb-4">
-            <label
-              htmlFor={`address-${index}`}
-              className="block font-medium text-sm mb-2"
-            >
-              Address
-            </label>
-            <textarea
-              id={`address-${index}`}
-              name="address"
-              value={acc.address}
-              onChange={(e) => handleAccommodationChange(index, e)}
-              className="textarea textarea-bordered w-full p-2 rounded"
-              rows={3}
-            />
-          </div>
-          <div className="mb-4">
-            <label
-              htmlFor={`checkInDate-${index}`}
-              className="block font-medium text-sm mb-2"
-            >
-              Check-in Date
-            </label>
-            <input
-              id={`checkInDate-${index}`}
-              type="date"
-              name="checkInDate"
-              value={acc.check_in_date}
-              onChange={(e) => handleAccommodationChange(index, e)}
-              className="input input-bordered w-full p-2 rounded"
-            />
-          </div>
-          <div className="mb-4">
-            <label
-              htmlFor={`checkOutDate-${index}`}
-              className="block font-medium text-sm mb-2"
-            >
-              Check-out Date
-            </label>
-            <input
-              id={`checkOutDate-${index}`}
-              type="date"
-              name="checkOutDate"
-              value={acc.check_out_date}
-              onChange={(e) => handleAccommodationChange(index, e)}
-              className="input input-bordered w-full p-2 rounded"
-            />
-          </div>
-          <div className="mb-4">
-            <label
-              htmlFor={`contactNumber-${index}`}
-              className="block font-medium text-sm mb-2"
-            >
-              Contact Number
-            </label>
-            <input
-              id={`contactNumber-${index}`}
-              type="text"
-              name="contactNumber"
-              value={acc.contact_number}
-              onChange={(e) => handleAccommodationChange(index, e)}
-              className="input input-bordered w-full p-2 rounded"
-            />
-          </div>
-          <div className="mb-4">
-            <label
-              htmlFor={`notes-${index}`}
-              className="block font-medium text-sm mb-2"
-            >
-              Notes
-            </label>
-            <textarea
-              id={`notes-${index}`}
-              name="notes"
-              value={acc.notes}
-              onChange={(e) => handleAccommodationChange(index, e)}
-              className="textarea textarea-bordered w-full p-2 rounded"
-              rows={3}
-            />
-          </div>
-          <button
-            type="submit"
-            className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+      {accommodations ? (
+        accommodations.map((acc, index) => (
+          <form
+            key={acc.id}
+            onSubmit={(e) => handleAccommodationSubmit(e, index)}
+            className="mb-8"
           >
-            Update Accommodations
-          </button>
-        </form>
-      ))}
+            <div className="mb-4">
+              <label
+                htmlFor={`name-${index}`}
+                className="block font-medium text-sm mb-2"
+              >
+                Name
+              </label>
+              <input
+                id={`name-${index}`}
+                type="text"
+                name="name"
+                value={acc.name}
+                onChange={(e) => handleAccommodationChange(index, e)}
+                className="input input-bordered w-full p-2 rounded"
+              />
+            </div>
+            <div className="mb-4">
+              <label
+                htmlFor={`address-${index}`}
+                className="block font-medium text-sm mb-2"
+              >
+                Address
+              </label>
+              <textarea
+                id={`address-${index}`}
+                name="address"
+                value={acc.address}
+                onChange={(e) => handleAccommodationChange(index, e)}
+                className="textarea textarea-bordered w-full p-2 rounded"
+                rows={3}
+              />
+            </div>
+            <div className="mb-4">
+              <label
+                htmlFor={`checkInDate-${index}`}
+                className="block font-medium text-sm mb-2"
+              >
+                Check-in Date
+              </label>
+              <input
+                id={`checkInDate-${index}`}
+                type="date"
+                name="checkInDate"
+                value={acc.check_in_date}
+                onChange={(e) => handleAccommodationChange(index, e)}
+                className="input input-bordered w-full p-2 rounded"
+              />
+            </div>
+            <div className="mb-4">
+              <label
+                htmlFor={`checkOutDate-${index}`}
+                className="block font-medium text-sm mb-2"
+              >
+                Check-out Date
+              </label>
+              <input
+                id={`checkOutDate-${index}`}
+                type="date"
+                name="checkOutDate"
+                value={acc.check_out_date}
+                onChange={(e) => handleAccommodationChange(index, e)}
+                className="input input-bordered w-full p-2 rounded"
+              />
+            </div>
+            <div className="mb-4">
+              <label
+                htmlFor={`contactNumber-${index}`}
+                className="block font-medium text-sm mb-2"
+              >
+                Contact Number
+              </label>
+              <input
+                id={`contactNumber-${index}`}
+                type="text"
+                name="contactNumber"
+                value={acc.contact_number}
+                onChange={(e) => handleAccommodationChange(index, e)}
+                className="input input-bordered w-full p-2 rounded"
+              />
+            </div>
+            <div className="mb-8">
+              <label
+                htmlFor={`notes-${index}`}
+                className="block font-medium text-sm mb-2"
+              >
+                Notes
+              </label>
+              <textarea
+                id={`notes-${index}`}
+                name="notes"
+                value={acc.notes}
+                onChange={(e) => handleAccommodationChange(index, e)}
+                className="textarea textarea-bordered w-full p-2 rounded"
+                rows={3}
+              />
+            </div>
+            <button
+              type="submit"
+              className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            >
+              Update Accommodations
+            </button>
+          </form>
+        ))
+      ) : (
+        <p>No accommodations to display</p>
+      )}
     </div>
   )
 }

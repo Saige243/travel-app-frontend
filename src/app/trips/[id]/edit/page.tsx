@@ -10,7 +10,6 @@ function EditTrip() {
   const { id } = useParams()
   const router = useRouter()
   const { trip, fetchTrip } = useTripData()
-  console.log("tripss", trip)
 
   useEffect(() => {
     fetchTrip(id as string)
