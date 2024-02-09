@@ -22,8 +22,8 @@ function EditTrip() {
       <EditAccommodationsForm trip={trip} />
       <div>
         <button
-          onClick={() => router.push(`trips/${trip.id}`)}
-          className="bg-blue-700 ml-2 hover:bg-blue-800 text-white font-bold py-2 my-12 px-4 rounded"
+          onClick={() => router.push(`/trips/${id}`)}
+          className="bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 my-12 px-4 rounded"
         >
           Back to trip
         </button>

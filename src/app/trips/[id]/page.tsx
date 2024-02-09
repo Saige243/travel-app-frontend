@@ -45,18 +45,9 @@ function TripID() {
                 `${formatDate(trip.start_date)} - ${formatDate(trip.end_date)}`}
             </p>
           </div>
-          {/* <div className="w-full place-items-center justify-center">
-            <button
-              className="px-4 mt-8 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm"
-              onClick={() => router.push(`${trip?.id}/edit`)}
-            >
-              Edit trip details
-            </button>
-          </div> */}
         </div>
         <div>
           <h2 className="text-3xl font-bold py-4">Accommodations:</h2>
-
           {trip && trip.accommodations.length > 0 ? (
             trip.accommodations.map((accommodation, index) => (
               <div key={index} className="py-2 text-xl">
@@ -89,13 +80,21 @@ function TripID() {
               </div>
             ))
           ) : (
-            <div className="text-center py-6">
-              <p className="text-xl">You have no accommodations!</p>
+            <div className="py-6">
+              <div className="text-center py-6">
+                <p className="text-xl">You have no accommodations!</p>
+                <button
+                  className="px-4 mt-8 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                  onClick={() => router.push(`${trip?.id}/accommodations/new`)}
+                >
+                  Add accommodations
+                </button>
+              </div>
               <button
-                className="px-4 mt-8 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-                onClick={() => router.push(`${trip?.id}/accommodations/new`)}
+                className="px-4 mt-8 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm"
+                onClick={() => router.push(`${trip?.id}/edit`)}
               >
-                Add accommodations
+                Edit trip details
               </button>
             </div>
           )}

@@ -80,7 +80,7 @@ function EditDetailsForm({ trip }: { trip: Trip | null }) {
             name="title"
             value={formData.title}
             onChange={handleChange}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-1"
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2"
           />
         </div>
         <div>
@@ -96,7 +96,7 @@ function EditDetailsForm({ trip }: { trip: Trip | null }) {
             name="location"
             value={formData.location}
             onChange={handleChange}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-1"
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2"
           />
         </div>
         <div>
@@ -112,7 +112,7 @@ function EditDetailsForm({ trip }: { trip: Trip | null }) {
             name="start_date"
             value={formData.start_date}
             onChange={handleChange}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-1"
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2"
           />
         </div>
         <div className="pb-4">
@@ -128,7 +128,7 @@ function EditDetailsForm({ trip }: { trip: Trip | null }) {
             name="end_date"
             value={formData.end_date}
             onChange={handleChange}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-1"
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2"
           />
         </div>
         <button

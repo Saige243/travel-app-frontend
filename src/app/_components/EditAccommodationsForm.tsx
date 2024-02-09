@@ -44,6 +44,12 @@ function EditAccommodationsForm({ trip }: { trip: Trip | null }) {
     index: number,
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
+    console.log(
+      "handleAccommodationChange",
+      index,
+      e.target.name,
+      e.target.value
+    )
     const updatedAccommodations = accommodations.map((acc, idx) => {
       if (idx === index) {
         return { ...acc, [e.target.name]: e.target.value }
@@ -88,7 +94,7 @@ function EditAccommodationsForm({ trip }: { trip: Trip | null }) {
   return (
     <div className="pt-8">
       <h2 className="text-xl font-bold mt-8 mb-4">Edit Accommodations</h2>
-      {accommodations ? (
+      {accommodations.length > 0 ? (
         accommodations.map((acc, index) => (
           <form
             key={acc.id}
@@ -168,7 +174,7 @@ function EditAccommodationsForm({ trip }: { trip: Trip | null }) {
               </label>
               <input
                 id={`contactNumber-${index}`}
-                type="text"
+                type="tel"
                 name="contactNumber"
                 value={acc.contact_number}
                 onChange={(e) => handleAccommodationChange(index, e)}
@@ -200,7 +206,15 @@ function EditAccommodationsForm({ trip }: { trip: Trip | null }) {
           </form>
         ))
       ) : (
-        <p>No accommodations to display</p>
+        <div className="text-center py-6">
+          <p className="text-xl">You have no accommodations!</p>
+          <button
+            className="px-4 mt-8 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+            onClick={() => router.push(`/trips/${trip?.id}/accommodations/new`)}
+          >
+            Add accommodations
+          </button>
+        </div>
       )}
     </div>
   )
