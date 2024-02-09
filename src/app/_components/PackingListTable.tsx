@@ -42,7 +42,7 @@ function PackingListTable({ trip }: { trip: Trip | null }) {
             <div className="text-center py-6">
               <p className="text-xl">Your packing list is empty!</p>
               <button
-                className="px-4 mt-8 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                className="px-4 mt-8 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm"
                 onClick={() => router.push(`${trip?.id}/edit/packinglist`)}
               >
                 Create packing list
@@ -54,7 +54,7 @@ function PackingListTable({ trip }: { trip: Trip | null }) {
           <div className="flex space-x-4">
             <div className="pt-4">
               <button
-                className="px-4 mt-8 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                className="px-4 mt-8 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm"
                 onClick={() => router.push(`${trip?.id}/packinglist`)}
               >
                 Go to packing list
@@ -62,7 +62,7 @@ function PackingListTable({ trip }: { trip: Trip | null }) {
             </div>
             <div className="pt-4">
               <button
-                className="px-4 mt-8 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                className="px-4 mt-8 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm"
                 onClick={() => router.push(`${trip?.id}/edit/packinglist`)}
               >
                 Edit packing list

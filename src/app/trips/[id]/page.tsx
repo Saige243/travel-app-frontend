@@ -45,14 +45,14 @@ function TripID() {
                 `${formatDate(trip.start_date)} - ${formatDate(trip.end_date)}`}
             </p>
           </div>
-          <div className="w-full place-items-center justify-center">
+          {/* <div className="w-full place-items-center justify-center">
             <button
-              className="px-4 mt-8 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+              className="px-4 mt-8 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm"
               onClick={() => router.push(`${trip?.id}/edit`)}
             >
               Edit trip details
             </button>
-          </div>
+          </div> */}
         </div>
         <div>
           <h2 className="text-3xl font-bold py-4">Accommodations:</h2>
@@ -81,10 +81,10 @@ function TripID() {
                   <p>{accommodation.notes}</p>
                 </div>
                 <button
-                  className="px-4 mt-8 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-                  onClick={() => router.push(`${trip?.id}/edit/accommodations`)}
+                  className="px-4 mt-8 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm"
+                  onClick={() => router.push(`${trip?.id}/edit`)}
                 >
-                  Edit accommodations
+                  Edit trip details
                 </button>
               </div>
             ))
