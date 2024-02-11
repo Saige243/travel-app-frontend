@@ -27,49 +27,75 @@ function TripID() {
         <p className="text-4xl font-extrabold">{trip?.location}</p>
       </div>
 
-      <div className="flex flex-col justify-between">
-        <div className="py-8">
+      <div className="justify-between">
+        <div className="flex justify-between">
+          <div className="py-8">
+            <div>
+              <h2 className="text-3xl font-bold pb-4">Details:</h2>
+            </div>
+
+            <div className="py-2 text-xl">
+              <p className="font-bold pr-4 underline pb-2">Destination:</p>
+              <p className="text-md">{trip?.location}</p>
+            </div>
+
+            <div className="py-2 text-xl justify-center">
+              <p className="font-bold pr-4 underline pb-2">When:</p>
+              <p>
+                {trip &&
+                  `${formatDate(trip.start_date)} - ${formatDate(
+                    trip.end_date
+                  )}`}
+              </p>
+            </div>
+            <div className="py-2 text-xl justify-center">
+              <p className="font-bold pr-4 underline pb-2">Description:</p>
+              <p>
+                {trip && trip?.description !== ""
+                  ? "(No description provided.)"
+                  : trip?.description}
+              </p>
+            </div>
+          </div>
           <div>
-            <h2 className="text-3xl font-bold pb-4">Details:</h2>
-          </div>
-
-          <div className="py-2 text-xl">
-            <p className="font-bold pr-4 underline pb-2">Destination:</p>
-            <p className="text-md">{trip?.location}</p>
-          </div>
-
-          <div className="py-2 text-xl justify-center">
-            <p className="font-bold pr-4 underline pb-2">When:</p>
-            <p>
-              {trip &&
-                `${formatDate(trip.start_date)} - ${formatDate(trip.end_date)}`}
-            </p>
-          </div>
-        </div>
-        <div>
-          <h2 className="text-3xl font-bold py-4">Accommodations:</h2>
-          {trip && trip.accommodations.length > 0 ? (
-            trip.accommodations.map((accommodation, index) => (
-              <div key={index} className="py-2 text-xl">
-                <div className="pb-4">
-                  <h2 className="font-bold pr-4 underline pb-2">Where:</h2>
-                  <p>{accommodation.name}</p>
-                  <p>{accommodation.address}</p>
-                  <p className="text-blue-600">
-                    {accommodation.contact_number}
-                  </p>
+            <h2 className="text-3xl font-bold py-4">Accommodations:</h2>
+            {trip && trip.accommodations.length > 0 ? (
+              trip.accommodations.map((accommodation, index) => (
+                <div key={index} className="py-2 text-xl">
+                  <div className="pb-4">
+                    <h2 className="font-bold pr-4 underline pb-2">Where:</h2>
+                    <p>{accommodation.name}</p>
+                    <p>{accommodation.address}</p>
+                    <p className="text-blue-600">
+                      {accommodation.contact_number}
+                    </p>
+                  </div>
+                  <div className="pb-4">
+                    <h2 className="font-bold underline pb-2">Check In:</h2>
+                    <span>{formatDate(accommodation.check_in_date)}</span>
+                  </div>
+                  <div className="pb-4">
+                    <h2 className="font-bold underline pb-2">Check Out:</h2>
+                    <span>{formatDate(accommodation.check_out_date)}</span>
+                  </div>
+                  <div className="pb-4">
+                    <h2 className="font-bold underline pb-2">Notes:</h2>
+                    <p>{accommodation.notes}</p>
+                  </div>
                 </div>
-                <div className="pb-4">
-                  <h2 className="font-bold underline pb-2">Check In:</h2>
-                  <span>{formatDate(accommodation.check_in_date)}</span>
-                </div>
-                <div className="pb-4">
-                  <h2 className="font-bold underline pb-2">Check Out:</h2>
-                  <span>{formatDate(accommodation.check_out_date)}</span>
-                </div>
-                <div className="pb-4">
-                  <h2 className="font-bold underline pb-2">Notes:</h2>
-                  <p>{accommodation.notes}</p>
+              ))
+            ) : (
+              <div className="py-6">
+                <div className="text-center py-6">
+                  <p className="text-xl">You have no accommodations!</p>
+                  <button
+                    className="px-4 mt-8 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                    onClick={() =>
+                      router.push(`${trip?.id}/accommodations/new`)
+                    }
+                  >
+                    Add accommodations
+                  </button>
                 </div>
                 <button
                   className="px-4 mt-8 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm"
@@ -78,27 +104,15 @@ function TripID() {
                   Edit trip details
                 </button>
               </div>
-            ))
-          ) : (
-            <div className="py-6">
-              <div className="text-center py-6">
-                <p className="text-xl">You have no accommodations!</p>
-                <button
-                  className="px-4 mt-8 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-                  onClick={() => router.push(`${trip?.id}/accommodations/new`)}
-                >
-                  Add accommodations
-                </button>
-              </div>
-              <button
-                className="px-4 mt-8 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm"
-                onClick={() => router.push(`${trip?.id}/edit`)}
-              >
-                Edit trip details
-              </button>
-            </div>
-          )}
+            )}
+          </div>
         </div>
+        <button
+          className="px-4 mt-8 py-2 mb-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm"
+          onClick={() => router.push(`${trip?.id}/edit`)}
+        >
+          Edit trip details
+        </button>
         <div className="py-8">
           <PackingListTable trip={trip} />
         </div>
