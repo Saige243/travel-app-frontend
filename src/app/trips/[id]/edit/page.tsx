@@ -16,7 +16,7 @@ function EditTrip() {
   }, [])
 
   return (
-    <>
+    <div className="flex flex-col px-8 lg:px-36">
       <h1 className="text-4xl font-bold mb-8">Edit {trip?.title}</h1>
       <EditDetailsForm trip={trip} />
       <EditAccommodationsForm trip={trip} />
@@ -28,7 +28,7 @@ function EditTrip() {
           Back to trip
         </button>
       </div>
-    </>
+    </div>
   )
 }
 

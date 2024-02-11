@@ -21,14 +21,14 @@ function TripID() {
   }
 
   return (
-    <div className="mx-auto max-w-6xl">
+    <div className="mx-auto max-w-5xl">
       <div className="text-center pb-8">
         <h1 className="text-5xl font-extrabold">My {trip?.title} Trip</h1>
         <p className="text-4xl font-extrabold">{trip?.location}</p>
       </div>
 
       <div className="justify-between">
-        <div className="flex justify-between">
+        <div className="px-4 lg:px-0 md:flex md:justify-between">
           <div className="py-8">
             <div>
               <h2 className="text-3xl font-bold pb-4">Details:</h2>
@@ -51,9 +51,9 @@ function TripID() {
             <div className="py-2 text-xl justify-center">
               <p className="font-bold pr-4 underline pb-2">Description:</p>
               <p>
-                {trip && trip?.description !== ""
-                  ? "(No description provided.)"
-                  : trip?.description}
+                {trip && trip?.description !== undefined
+                  ? trip?.description
+                  : "No description provided"}
               </p>
             </div>
           </div>

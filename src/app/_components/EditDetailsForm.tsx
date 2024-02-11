@@ -3,12 +3,14 @@
 import React, { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { Trip } from "../types"
+import { de } from "date-fns/locale"
 
 interface FormData {
   title: string
   location: string
   start_date: string
   end_date: string
+  description: string
 }
 
 function EditDetailsForm({ trip }: { trip: Trip | null }) {
@@ -18,6 +20,7 @@ function EditDetailsForm({ trip }: { trip: Trip | null }) {
     location: "",
     start_date: "",
     end_date: "",
+    description: "",
   })
 
   useEffect(() => {
@@ -27,6 +30,7 @@ function EditDetailsForm({ trip }: { trip: Trip | null }) {
         location: trip?.location,
         start_date: trip?.start_date,
         end_date: trip?.end_date,
+        description: trip?.description,
       })
   }, [trip])
 
@@ -130,6 +134,22 @@ function EditDetailsForm({ trip }: { trip: Trip | null }) {
             onChange={handleChange}
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2"
           />
+        </div>
+        <div className="pb-4">
+          <label
+            htmlFor="description"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Description
+          </label>
+          <textarea
+            id="description"
+            name="description"
+            value={formData.description}
+            onChange={handleChange}
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2"
+            rows={3}
+          ></textarea>
         </div>
         <button
           type="submit"
