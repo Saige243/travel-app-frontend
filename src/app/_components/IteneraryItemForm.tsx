@@ -9,7 +9,13 @@ function AddItineraryItemForm({ trip }: { trip: Trip | null }) {
       return trip.itinerary_items
     } else {
       return [
-        { id: 0, title: "", description: "", time: "", date: "", location: "" },
+        {
+          title: "",
+          description: "",
+          time: "",
+          date: "",
+          location: "",
+        },
       ]
     }
   })
@@ -29,13 +35,49 @@ function AddItineraryItemForm({ trip }: { trip: Trip | null }) {
   const handleAddItem = () => {
     setItineraryItems([
       ...itineraryItems,
-      { id: 0, title: "", description: "", time: "", date: "", location: "" },
+      {
+        title: "",
+        description: "",
+        time: "",
+        date: "",
+        location: "",
+      },
     ])
   }
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault()
-    console.log(itineraryItems)
+
+    const isSingleSubmission =
+      itineraryItems.length === 1 && itineraryItems[0].title !== ""
+
+    const submissionData = isSingleSubmission
+      ? { itinerary_item: { ...itineraryItems[0], trip_id: trip?.id } }
+      : {
+          itinerary_items: itineraryItems.map((item) => ({
+            ...item,
+            trip_id: trip?.id,
+          })),
+        }
+
+    try {
+      const url = `http://localhost:3001/trips/${trip?.id}/itinerary_items`
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify(submissionData),
+      })
+
+      if (!response.ok) throw new Error("Network response was not ok.")
+
+      console.log("Itinerary updated", await response.json())
+    } catch (error) {
+      console.error("Failed to update item", error)
+      alert("Failed to add items. Please try again.")
+    }
   }
 
   return (

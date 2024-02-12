@@ -35,7 +35,7 @@ export type Accommodation = {
 }
 
 export type ItineraryItem = {
-  id: number
+  id?: number
   title: string
   description: string
   time: string
