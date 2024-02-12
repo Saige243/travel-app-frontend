@@ -5,7 +5,6 @@ import { useParams, useRouter } from "next/navigation"
 import { useTripData } from "../../_hooks/useTripData"
 import { format, parseISO } from "date-fns"
 import PackingListTable from "@/app/_components/PackingListTable"
-import ItineraryItemForm from "../../_components/IteneraryItemForm"
 
 function TripID() {
   const { id } = useParams()
@@ -16,12 +15,21 @@ function TripID() {
     fetchTrip(id as string)
   }, [])
 
-  console.log(trip)
-
   function formatDate(dateString: string) {
     const date = parseISO(dateString)
     return format(date, "EEEE, MMMM d, yyyy")
   }
+
+  function formatTime(timeString: string) {
+    const time = parseISO(timeString)
+    return format(time, "hh:mm a") // 24-hour format
+  }
+
+  const sortedItineraryItems = trip?.itinerary_items
+    ? [...trip.itinerary_items].sort(
+        (a, b) => parseISO(a.date).getTime() - parseISO(b.date).getTime()
+      )
+    : []
 
   return (
     <div className="mx-auto max-w-5xl">
@@ -118,23 +126,41 @@ function TripID() {
         </button>
         <div className="py-8">
           <PackingListTable trip={trip} />
-          {/* <ItineraryItemForm trip={trip} /> */}
         </div>
         <div>
           <h2 className="text-3xl font-bold py-4">Itenerary:</h2>
-          {trip?.itinerary_items && trip?.itinerary_items.length > 0 ? (
-            trip?.itinerary_items.map((item, index) => (
-              <div key={index} className="border p-4 rounded shadow space-y-2">
-                <h2 className="font-bold underline pb-2">Title:</h2>
-                <p>{item.title}</p>
-                <h2 className="font-bold underline pb-2">Description:</h2>
-                <p>{item.description}</p>
-                <h2 className="font-bold underline pb-2">Time:</h2>
-                <p>{item.time}</p>
-                <h2 className="font-bold underline pb-2">Date:</h2>
-                <p>{formatDate(item.date)}</p>
-                <h2 className="font-bold underline pb-2">Location:</h2>
-                <p>{item.location}</p>
+          {sortedItineraryItems && sortedItineraryItems.length > 0 ? (
+            sortedItineraryItems.map((item, index) => (
+              <div key={index}>
+                <div className="border p-4 rounded shadow space-y-2">
+                  <h2 className="font-bold pb-2 text-lg ">
+                    {formatDate(item.date)}
+                  </h2>
+                  <div className="flex space-x-4 justify-between">
+                    <div>
+                      <h2 className="font-bold underline ">Activity:</h2>
+                      <p>{item.title}</p>
+                    </div>
+                    <div>
+                      <h2 className="font-bold underline">Description:</h2>
+                      <p>{item.description}</p>
+                    </div>
+                    <div>
+                      <h2 className="font-bold underline">Time:</h2>
+                      <p>{formatTime(item.time)}</p>
+                    </div>
+                    <div>
+                      <h2 className="font-bold underline">Location:</h2>
+                      <p>{item.location}</p>
+                    </div>
+                  </div>
+                </div>
+                <button
+                  className="px-4 mt-8 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                  onClick={() => router.push(`${trip?.id}/itinerary/new`)}
+                >
+                  Add itinerary items
+                </button>
               </div>
             ))
           ) : (
