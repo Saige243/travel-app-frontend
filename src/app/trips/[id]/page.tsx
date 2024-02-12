@@ -171,11 +171,19 @@ function TripID() {
             </div>
           )}
           <button
-            className="px-4 mt-8 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+            className="px-4 mt-8 py-2 mr-4 bg-blue-600 text-white rounded hover:bg-blue-700"
             onClick={() => router.push(`${trip?.id}/itinerary/new`)}
           >
             Add itinerary items
           </button>
+          {trip && trip.itinerary_items.length > 0 && (
+            <button
+              className="px-4 mt-8 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+              onClick={() => router.push(`${trip?.id}/edit/itinerary`)}
+            >
+              Edit itinerary items
+            </button>
+          )}
         </div>
       </div>
     </div>

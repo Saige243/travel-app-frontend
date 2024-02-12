@@ -1,16 +1,18 @@
 "use client"
 
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Trip, ItineraryItem } from "../types"
 import { useRouter } from "next/navigation"
 
 function AddItineraryItemForm({ trip }: { trip: Trip | null }) {
   const router = useRouter()
-  const [itineraryItems, setItineraryItems] = useState<ItineraryItem[]>(() => {
+  const [itineraryItems, setItineraryItems] = useState<ItineraryItem[]>([])
+
+  useEffect(() => {
     if (trip && trip.itinerary_items.length > 0) {
-      return trip.itinerary_items
+      setItineraryItems(trip.itinerary_items)
     } else {
-      return [
+      setItineraryItems([
         {
           title: "",
           description: "",
@@ -18,9 +20,9 @@ function AddItineraryItemForm({ trip }: { trip: Trip | null }) {
           date: "",
           location: "",
         },
-      ]
+      ])
     }
-  })
+  }, [trip])
 
   const handleChange = (
     index: number,
@@ -85,10 +87,7 @@ function AddItineraryItemForm({ trip }: { trip: Trip | null }) {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <h1 className="font-bold text-2xl pb-2">
-        Add {trip?.title} Itinerary Item
-      </h1>
-
+      <h1 className="font-bold text-2xl pb-2">Edit {trip?.title} itinerary</h1>
       {itineraryItems.map((item, index) => (
         <div key={index} className="border p-4 rounded-lg shadow space-y-2">
           <input
@@ -133,21 +132,21 @@ function AddItineraryItemForm({ trip }: { trip: Trip | null }) {
           />
         </div>
       ))}
-      <div className="flex justify-start pt-4">
-        <button
-          type="button"
-          onClick={handleAddItem}
-          className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-        >
-          Add another item
-        </button>
+      <div className="flex justify-start pt-4 pb-4">
         <button
           type="submit"
-          className="ml-4 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+          className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
         >
-          Submit
+          Save Itinerary
         </button>
       </div>
+      <button
+        type="button"
+        onClick={() => router.push(`/trips/${trip?.id}/itinerary/new`)}
+        className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+      >
+        Add another item
+      </button>
     </form>
   )
 }
