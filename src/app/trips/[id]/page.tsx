@@ -5,6 +5,7 @@ import { useParams, useRouter } from "next/navigation"
 import { useTripData } from "../../_hooks/useTripData"
 import { format, parseISO } from "date-fns"
 import PackingListTable from "@/app/_components/PackingListTable"
+import ItineraryItemForm from "../../_components/IteneraryItemForm"
 
 function TripID() {
   const { id } = useParams()
@@ -115,9 +116,38 @@ function TripID() {
         </button>
         <div className="py-8">
           <PackingListTable trip={trip} />
+          {/* <ItineraryItemForm trip={trip} /> */}
         </div>
         <div>
           <h2 className="text-3xl font-bold py-4">Itenerary:</h2>
+          {trip?.itinerary_items && trip?.itinerary_items.length > 0 ? (
+            trip?.itinerary_items.map((item, index) => (
+              <div key={index} className="border p-4 rounded shadow space-y-2">
+                <h2 className="font-bold underline pb-2">Title:</h2>
+                <p>{item.title}</p>
+                <h2 className="font-bold underline pb-2">Description:</h2>
+                <p>{item.description}</p>
+                <h2 className="font-bold underline pb-2">Time:</h2>
+                <p>{item.time}</p>
+                <h2 className="font-bold underline pb-2">Date:</h2>
+                <p>{formatDate(item.date)}</p>
+                <h2 className="font-bold underline pb-2">Location:</h2>
+                <p>{item.location}</p>
+              </div>
+            ))
+          ) : (
+            <div className="py-6">
+              <div className="text-center py-6">
+                <p className="text-xl">You have no itinerary items!</p>
+                <button
+                  className="px-4 mt-8 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                  onClick={() => router.push(`${trip?.id}/itinerary/new`)}
+                >
+                  Add itinerary items
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
