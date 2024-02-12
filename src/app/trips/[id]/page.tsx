@@ -131,12 +131,12 @@ function TripID() {
           <h2 className="text-3xl font-bold py-4">Itenerary:</h2>
           {sortedItineraryItems && sortedItineraryItems.length > 0 ? (
             sortedItineraryItems.map((item, index) => (
-              <div key={index}>
-                <div className="border p-4 rounded shadow space-y-2">
+              <div key={index} className="py-1">
+                <div className="border p-3 rounded shadow space-y-2">
                   <h2 className="font-bold pb-2 text-lg ">
                     {formatDate(item.date)}
                   </h2>
-                  <div className="flex space-x-4 justify-between">
+                  <div className="flex flex-col space-y-3 md:space-y-0 md:grid md:grid-cols-4  justify-between">
                     <div>
                       <h2 className="font-bold underline ">Activity:</h2>
                       <p>{item.title}</p>
@@ -155,12 +155,6 @@ function TripID() {
                     </div>
                   </div>
                 </div>
-                <button
-                  className="px-4 mt-8 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-                  onClick={() => router.push(`${trip?.id}/itinerary/new`)}
-                >
-                  Add itinerary items
-                </button>
               </div>
             ))
           ) : (
@@ -176,6 +170,12 @@ function TripID() {
               </div>
             </div>
           )}
+          <button
+            className="px-4 mt-8 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+            onClick={() => router.push(`${trip?.id}/itinerary/new`)}
+          >
+            Add itinerary items
+          </button>
         </div>
       </div>
     </div>

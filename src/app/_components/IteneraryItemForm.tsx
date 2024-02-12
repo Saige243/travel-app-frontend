@@ -2,8 +2,10 @@
 
 import React, { useState } from "react"
 import { Trip, ItineraryItem } from "../types"
+import { useRouter } from "next/navigation"
 
 function AddItineraryItemForm({ trip }: { trip: Trip | null }) {
+  const router = useRouter()
   const [itineraryItems, setItineraryItems] = useState<ItineraryItem[]>(() => {
     if (trip && trip.itinerary_items.length > 0) {
       return trip.itinerary_items
@@ -73,7 +75,8 @@ function AddItineraryItemForm({ trip }: { trip: Trip | null }) {
 
       if (!response.ok) throw new Error("Network response was not ok.")
 
-      console.log("Itinerary updated", await response.json())
+      alert("Itinerary updated!")
+      router.push(`/trips/${trip?.id}`)
     } catch (error) {
       console.error("Failed to update item", error)
       alert("Failed to add items. Please try again.")
