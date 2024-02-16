@@ -85,14 +85,15 @@ function EditItineraryForm({ trip }: { trip: Trip | null }) {
     }
   }
 
-  const handleDelete = async (itemId: number | undefined) => {
-    const newItineraryItems = itineraryItems.filter(
-      (item) => item.id !== itemId
-    )
-    setItineraryItems(newItineraryItems)
-
+  const handleDelete = async ({
+    e,
+    itemId,
+  }: {
+    itemId: number | undefined
+    e: React.MouseEvent<HTMLButtonElement>
+  }) => {
+    e.preventDefault()
     try {
-      // Ensure the URL reflects the item's id for deletion
       const url = `http://localhost:3001/trips/${trip?.id}/itinerary_items/${itemId}`
       const response = await fetch(url, {
         method: "DELETE",
@@ -109,6 +110,11 @@ function EditItineraryForm({ trip }: { trip: Trip | null }) {
       console.error("Failed to delete item", error)
       alert("Failed to delete item. Please try again.")
     }
+
+    const newItineraryItems = itineraryItems.filter(
+      (item) => item.id !== itemId
+    )
+    setItineraryItems(newItineraryItems)
   }
 
   return (
@@ -158,7 +164,7 @@ function EditItineraryForm({ trip }: { trip: Trip | null }) {
           />
           <button
             className="p-1 px-2 bg-red-500 text-white rounded-md"
-            onClick={() => handleDelete(item.id)}
+            onClick={(e) => handleDelete({ itemId: item.id, e })}
           >
             Delete Item
           </button>
