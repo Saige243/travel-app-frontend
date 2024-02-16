@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react"
 import { Trip, ItineraryItem } from "../types"
 import { useRouter } from "next/navigation"
 
-function AddItineraryItemForm({ trip }: { trip: Trip | null }) {
+function EditItineraryForm({ trip }: { trip: Trip | null }) {
   const router = useRouter()
   const [itineraryItems, setItineraryItems] = useState<ItineraryItem[]>([])
 
@@ -85,6 +85,32 @@ function AddItineraryItemForm({ trip }: { trip: Trip | null }) {
     }
   }
 
+  const handleDelete = async (itemId: number | undefined) => {
+    const newItineraryItems = itineraryItems.filter(
+      (item) => item.id !== itemId
+    )
+    setItineraryItems(newItineraryItems)
+
+    try {
+      // Ensure the URL reflects the item's id for deletion
+      const url = `http://localhost:3001/trips/${trip?.id}/itinerary_items/${itemId}`
+      const response = await fetch(url, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      })
+
+      if (!response.ok) throw new Error("Network response was not ok.")
+
+      alert("Itinerary item deleted!")
+    } catch (error) {
+      console.error("Failed to delete item", error)
+      alert("Failed to delete item. Please try again.")
+    }
+  }
+
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <h1 className="font-bold text-2xl pb-2">Edit {trip?.title} itinerary</h1>
@@ -130,6 +156,12 @@ function AddItineraryItemForm({ trip }: { trip: Trip | null }) {
             onChange={(e) => handleChange(index, e)}
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2"
           />
+          <button
+            className="p-1 px-2 bg-red-500 text-white rounded-md"
+            onClick={() => handleDelete(item.id)}
+          >
+            Delete Item
+          </button>
         </div>
       ))}
       <div className="flex justify-start pt-4 pb-4">
@@ -151,4 +183,4 @@ function AddItineraryItemForm({ trip }: { trip: Trip | null }) {
   )
 }
 
-export default AddItineraryItemForm
+export default EditItineraryForm
