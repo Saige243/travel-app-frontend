@@ -71,6 +71,11 @@ function PackingListTable({ trip }: { trip: Trip | null }) {
                   type="checkbox"
                   checked={item.packed ?? false}
                   readOnly
+                  onClick={() =>
+                    alert(
+                      "Want to change the packed status? Head to the packing list page!"
+                    )
+                  }
                 />
               </div>
             </li>
