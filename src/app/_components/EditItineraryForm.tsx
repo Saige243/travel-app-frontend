@@ -36,52 +36,43 @@ function EditItineraryForm({ trip }: { trip: Trip | null }) {
     setItineraryItems(newItineraryItems)
   }
 
-  const handleAddItem = () => {
-    setItineraryItems([
-      ...itineraryItems,
-      {
-        title: "",
-        description: "",
-        time: "",
-        date: "",
-        location: "",
-      },
-    ])
-  }
-
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault()
 
-    const isSingleSubmission =
-      itineraryItems.length === 1 && itineraryItems[0].title !== ""
+    const saveIteneraryItem = async (item: ItineraryItem) => {
+      const url = item.id
+        ? `http://localhost:3001/trips/${trip?.id}/itinerary_items/${item.id}`
+        : `http://localhost:3001/trips/${trip?.id}/itinerary_items`
+      const method = item.id ? "PATCH" : "POST"
 
-    const submissionData = isSingleSubmission
-      ? { itinerary_item: { ...itineraryItems[0], trip_id: trip?.id } }
-      : {
-          itinerary_items: itineraryItems.map((item) => ({
-            ...item,
-            trip_id: trip?.id,
-          })),
-        }
-
-    try {
-      const url = `http://localhost:3001/trips/${trip?.id}/itinerary_items`
-      const response = await fetch(url, {
-        method: "POST",
+      const res = await fetch(url, {
+        method,
         headers: {
           "Content-Type": "application/json",
         },
+        body: JSON.stringify({
+          itinerary_item: { ...item, trip_id: trip?.id },
+        }),
         credentials: "include",
-        body: JSON.stringify(submissionData),
       })
 
-      if (!response.ok) throw new Error("Network response was not ok.")
+      if (!res.ok) {
+        console.error("Failed to save itinerary item", res)
+        alert("Failed to save itinerary item. Please try again.")
+      }
 
-      alert("Itinerary updated!")
+      return res.json()
+    }
+    try {
+      for (const item of itineraryItems) {
+        await saveIteneraryItem(item)
+      }
+
+      alert("Itinerary saved!")
       router.push(`/trips/${trip?.id}`)
     } catch (error) {
-      console.error("Failed to update item", error)
-      alert("Failed to add items. Please try again.")
+      console.error("Failed to save itinerary", error)
+      alert("Failed to save itinerary. Please try again.")
     }
   }
 
