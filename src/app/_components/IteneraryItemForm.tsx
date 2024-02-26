@@ -50,6 +50,24 @@ function AddItineraryItemForm({ trip }: { trip: Trip | null }) {
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault()
 
+    if (!trip || !trip.start_date || !trip.end_date) {
+      alert("Trip dates are not defined.")
+      return
+    }
+
+    const startDate = new Date(trip.start_date)
+    const endDate = new Date(trip.end_date)
+
+    for (const item of itineraryItems) {
+      const itemDate = new Date(item.date)
+      if (itemDate < startDate || itemDate > endDate) {
+        alert(
+          `All itinerary items must fit within the trip date range. ${trip.start_date} - ${trip.end_date}`
+        )
+        return
+      }
+    }
+
     const isSingleSubmission =
       itineraryItems.length === 1 && itineraryItems[0].title !== ""
 
