@@ -7,6 +7,8 @@ import { format, parseISO } from "date-fns"
 import PackingListTable from "@/app/_components/PackingListTable"
 import { ItineraryItem } from "@/app/types"
 
+type ItemsGroupedByDate = Record<string, ItineraryItem[]>
+
 function TripID() {
   const { id } = useParams()
   const router = useRouter()
@@ -18,7 +20,7 @@ function TripID() {
 
   function formatDate(dateString: string) {
     const date = parseISO(dateString)
-    return format(date, "EEEE, MMMM d, yyyy")
+    return format(date, "EEEE, MMMM d")
   }
 
   function formatTime(timeString: string) {
@@ -43,6 +45,16 @@ function TripID() {
   )
 
   const joinedItineraryItems = sortedDatedItems.concat(undatedItems)
+
+  const itemsGroupedByDate: ItemsGroupedByDate =
+    joinedItineraryItems.reduce<ItemsGroupedByDate>((acc, item) => {
+      const date = item.date || "Undated"
+      if (!acc[date]) {
+        acc[date] = []
+      }
+      acc[date].push(item)
+      return acc
+    }, {})
 
   return (
     <div className="mx-auto max-w-5xl">
@@ -142,34 +154,39 @@ function TripID() {
         </div>
         <div>
           <h2 className="text-3xl font-bold py-4">Itenerary:</h2>
-          {joinedItineraryItems && joinedItineraryItems.length > 0 ? (
-            joinedItineraryItems.map((item, index) => (
+          {Object.keys(itemsGroupedByDate).length > 0 ? (
+            Object.entries(itemsGroupedByDate).map(([date, items], index) => (
               <div key={index} className="py-1">
-                <div className="border p-3 rounded shadow space-y-2">
-                  <h2 className="font-bold pb-2 text-lg ">
-                    {item.date ? formatDate(item.date) : "No date provided"}
-                  </h2>
-                  <div className="flex flex-col space-y-3 md:space-y-0 md:grid md:grid-cols-4  justify-between">
-                    <div>
-                      <h2 className="font-bold underline ">Activity:</h2>
-                      <p>{item.title || "No title provided"}</p>
-                    </div>
-                    <div>
-                      <h2 className="font-bold underline">Description:</h2>
-                      <p>{item.description || "No description provided"}</p>
-                    </div>
-                    <div>
-                      <h2 className="font-bold underline">Time:</h2>
-                      <p>
-                        {item.time ? formatTime(item.time) : "No time provided"}
-                      </p>
-                    </div>
-                    <div>
-                      <h2 className="font-bold underline">Location:</h2>
-                      <p>{item.location || "No location provided"}</p>
+                <h2 className="font-bold pb-2 text-lg ">{formatDate(date)}</h2>
+                {items.map((item: ItineraryItem, itemIndex: number) => (
+                  <div
+                    key={itemIndex}
+                    className="border ml-4 p-3 m-1 rounded shadow space-y-2"
+                  >
+                    <div className="flex flex-col space-y-3 md:space-y-0 md:grid md:grid-cols-4 justify-between">
+                      <div>
+                        <h2 className="font-bold underline">Activity:</h2>
+                        <p>{item.title || "No title provided"}</p>
+                      </div>
+                      <div>
+                        <h2 className="font-bold underline">Description:</h2>
+                        <p>{item.description || "No description provided"}</p>
+                      </div>
+                      <div>
+                        <h2 className="font-bold underline">Time:</h2>
+                        <p>
+                          {item.time
+                            ? formatTime(item.time)
+                            : "No time provided"}
+                        </p>
+                      </div>
+                      <div>
+                        <h2 className="font-bold underline">Location:</h2>
+                        <p>{item.location || "No location provided"}</p>
+                      </div>
                     </div>
                   </div>
-                </div>
+                ))}
               </div>
             ))
           ) : (
