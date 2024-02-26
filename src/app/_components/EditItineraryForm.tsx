@@ -10,7 +10,15 @@ function EditItineraryForm({ trip }: { trip: Trip | null }) {
 
   useEffect(() => {
     if (trip && trip.itinerary_items.length > 0) {
-      setItineraryItems(trip.itinerary_items)
+      const itemsWithDefaults = trip.itinerary_items.map((item) => ({
+        ...item,
+        title: item.title || "",
+        description: item.description || "",
+        time: item.time || "",
+        date: item.date || "",
+        location: item.location || "",
+      }))
+      setItineraryItems(itemsWithDefaults)
     } else {
       setItineraryItems([
         {
