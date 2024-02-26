@@ -5,6 +5,7 @@ import { useParams, useRouter } from "next/navigation"
 import { useTripData } from "../../_hooks/useTripData"
 import { format, parseISO } from "date-fns"
 import PackingListTable from "@/app/_components/PackingListTable"
+import { ItineraryItem } from "@/app/types"
 
 function TripID() {
   const { id } = useParams()
@@ -22,14 +23,26 @@ function TripID() {
 
   function formatTime(timeString: string) {
     const time = parseISO(timeString)
-    return format(time, "hh:mm a") // 24-hour format
+    return format(time, "hh:mm a")
   }
 
-  const sortedItineraryItems = trip?.itinerary_items
-    ? [...trip.itinerary_items].sort(
-        (a, b) => parseISO(a.date).getTime() - parseISO(b.date).getTime()
-      )
-    : []
+  const { datedItems, undatedItems } = trip?.itinerary_items.reduce(
+    (acc, item) => {
+      if (item.date) {
+        acc.datedItems.push(item)
+      } else {
+        acc.undatedItems.push(item)
+      }
+      return acc
+    },
+    { datedItems: [] as ItineraryItem[], undatedItems: [] as ItineraryItem[] }
+  ) || { datedItems: [], undatedItems: [] }
+
+  const sortedDatedItems = datedItems.sort(
+    (a, b) => parseISO(a.date).getTime() - parseISO(b.date).getTime()
+  )
+
+  const joinedItineraryItems = sortedDatedItems.concat(undatedItems)
 
   return (
     <div className="mx-auto max-w-5xl">
@@ -129,29 +142,31 @@ function TripID() {
         </div>
         <div>
           <h2 className="text-3xl font-bold py-4">Itenerary:</h2>
-          {sortedItineraryItems && sortedItineraryItems.length > 0 ? (
-            sortedItineraryItems.map((item, index) => (
+          {joinedItineraryItems && joinedItineraryItems.length > 0 ? (
+            joinedItineraryItems.map((item, index) => (
               <div key={index} className="py-1">
                 <div className="border p-3 rounded shadow space-y-2">
                   <h2 className="font-bold pb-2 text-lg ">
-                    {formatDate(item.date)}
+                    {item.date ? formatDate(item.date) : "No date provided"}
                   </h2>
                   <div className="flex flex-col space-y-3 md:space-y-0 md:grid md:grid-cols-4  justify-between">
                     <div>
                       <h2 className="font-bold underline ">Activity:</h2>
-                      <p>{item.title}</p>
+                      <p>{item.title || "No title provided"}</p>
                     </div>
                     <div>
                       <h2 className="font-bold underline">Description:</h2>
-                      <p>{item.description}</p>
+                      <p>{item.description || "No description provided"}</p>
                     </div>
                     <div>
                       <h2 className="font-bold underline">Time:</h2>
-                      <p>{formatTime(item.time)}</p>
+                      <p>
+                        {item.time ? formatTime(item.time) : "No time provided"}
+                      </p>
                     </div>
                     <div>
                       <h2 className="font-bold underline">Location:</h2>
-                      <p>{item.location}</p>
+                      <p>{item.location || "No location provided"}</p>
                     </div>
                   </div>
                 </div>
