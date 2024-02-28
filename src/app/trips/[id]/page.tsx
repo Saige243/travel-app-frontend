@@ -57,7 +57,7 @@ function TripID() {
     }, {})
 
   return (
-    <div className="mx-auto max-w-5xl">
+    <div className="pt-12 md:pt-6 mx-auto max-w-5xl">
       <div className="text-center pb-8">
         <h1 className="text-5xl font-extrabold">My {trip?.title} Trip</h1>
         <p className="text-4xl font-extrabold">{trip?.location}</p>
