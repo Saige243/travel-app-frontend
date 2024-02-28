@@ -13,6 +13,7 @@ function TripID() {
   const { id } = useParams()
   const router = useRouter()
   const { trip, fetchTrip } = useTripData()
+  const [filteredDate, setFilteredDate] = React.useState("ALL")
 
   useEffect(() => {
     fetchTrip(id as string)
@@ -55,6 +56,8 @@ function TripID() {
       acc[date].push(item)
       return acc
     }, {})
+
+  // console.log(joinedItineraryItems.map((item) => item.date))
 
   return (
     <div className="pt-12 md:pt-6 mx-auto max-w-5xl">
@@ -154,6 +157,21 @@ function TripID() {
         </div>
         <div>
           <h2 className="text-3xl font-bold py-4">Itenerary:</h2>
+          <div className="mb-4">
+            <select
+              value={filteredDate}
+              onChange={(e) => setFilteredDate(e.target.value)}
+              className="mb-4 p-1 rounded-md"
+            >
+              <option value="ALL">Show All</option>
+              {sortedDatedItems.map((item) => (
+                <option key={item.id} value={item.date}>
+                  {formatDate(item.date)}
+                </option>
+              ))}
+              <option value="UNDATED">Undated</option>
+            </select>
+          </div>
           {Object.keys(itemsGroupedByDate).length > 0 ? (
             Object.entries(itemsGroupedByDate).map(([date, items], index) => (
               <div key={index} className="py-1">
