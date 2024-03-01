@@ -6,6 +6,7 @@ import { useTripData } from "../../_hooks/useTripData"
 import { format, parseISO } from "date-fns"
 import PackingListTable from "@/app/_components/PackingListTable"
 import { ItineraryItem } from "@/app/types"
+import ItineraryItems from "@/app/_components/IteneraryItems"
 
 type ItemsGroupedByDate = Record<string, ItineraryItem[]>
 
@@ -28,36 +29,6 @@ function TripID() {
     const time = parseISO(timeString)
     return format(time, "hh:mm a")
   }
-
-  const { datedItems, undatedItems } = trip?.itinerary_items.reduce(
-    (acc, item) => {
-      if (item.date) {
-        acc.datedItems.push(item)
-      } else {
-        acc.undatedItems.push(item)
-      }
-      return acc
-    },
-    { datedItems: [] as ItineraryItem[], undatedItems: [] as ItineraryItem[] }
-  ) || { datedItems: [], undatedItems: [] }
-
-  const sortedDatedItems = datedItems.sort(
-    (a, b) => parseISO(a.date).getTime() - parseISO(b.date).getTime()
-  )
-
-  const joinedItineraryItems = sortedDatedItems.concat(undatedItems)
-
-  const itemsGroupedByDate: ItemsGroupedByDate =
-    joinedItineraryItems.reduce<ItemsGroupedByDate>((acc, item) => {
-      const date = item.date || "Undated"
-      if (!acc[date]) {
-        acc[date] = []
-      }
-      acc[date].push(item)
-      return acc
-    }, {})
-
-  // console.log(joinedItineraryItems.map((item) => item.date))
 
   return (
     <div className="pt-12 md:pt-6 mx-auto max-w-5xl">
@@ -157,83 +128,7 @@ function TripID() {
         </div>
         <div>
           <h2 className="text-3xl font-bold py-4">Itenerary:</h2>
-          <div className="mb-4">
-            <select
-              value={filteredDate}
-              onChange={(e) => setFilteredDate(e.target.value)}
-              className="mb-4 p-1 rounded-md"
-            >
-              <option value="ALL">Show All</option>
-              {sortedDatedItems.map((item) => (
-                <option key={item.id} value={item.date}>
-                  {formatDate(item.date)}
-                </option>
-              ))}
-              <option value="UNDATED">Undated</option>
-            </select>
-          </div>
-          {Object.keys(itemsGroupedByDate).length > 0 ? (
-            Object.entries(itemsGroupedByDate).map(([date, items], index) => (
-              <div key={index} className="py-1">
-                <h2 className="font-bold pb-2 text-lg ">{formatDate(date)}</h2>
-                {items.map((item: ItineraryItem, itemIndex: number) => (
-                  <div
-                    key={itemIndex}
-                    className="border ml-4 p-3 m-1 rounded shadow space-y-2"
-                  >
-                    <div className="flex flex-col space-y-3 md:space-y-0 md:grid md:grid-cols-4 justify-between">
-                      <div>
-                        <h2 className="font-bold underline">Activity:</h2>
-                        <p>{item.title || "No title provided"}</p>
-                      </div>
-                      <div>
-                        <h2 className="font-bold underline">Description:</h2>
-                        <p>{item.description || "No description provided"}</p>
-                      </div>
-                      <div>
-                        <h2 className="font-bold underline">Time:</h2>
-                        <p>
-                          {item.time
-                            ? formatTime(item.time)
-                            : "No time provided"}
-                        </p>
-                      </div>
-                      <div>
-                        <h2 className="font-bold underline">Location:</h2>
-                        <p>{item.location || "No location provided"}</p>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ))
-          ) : (
-            <div className="py-6">
-              <div className="text-center py-6">
-                <p className="text-xl">You have no itinerary items!</p>
-                <button
-                  className="px-4 mt-8 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-                  onClick={() => router.push(`${trip?.id}/itinerary/new`)}
-                >
-                  Add itinerary items
-                </button>
-              </div>
-            </div>
-          )}
-          <button
-            className="px-4 mt-8 py-2 mr-4 bg-blue-600 text-white rounded hover:bg-blue-700"
-            onClick={() => router.push(`${trip?.id}/itinerary/new`)}
-          >
-            Add itinerary items
-          </button>
-          {trip && trip.itinerary_items.length > 0 && (
-            <button
-              className="px-4 mt-8 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-              onClick={() => router.push(`${trip?.id}/edit/itinerary`)}
-            >
-              Edit itinerary items
-            </button>
-          )}
+          <ItineraryItems itineraries={trip?.itinerary_items ?? []} />
         </div>
       </div>
     </div>
