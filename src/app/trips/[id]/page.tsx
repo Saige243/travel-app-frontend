@@ -14,7 +14,6 @@ function TripID() {
   const { id } = useParams()
   const router = useRouter()
   const { trip, fetchTrip } = useTripData()
-  const [filteredDate, setFilteredDate] = React.useState("ALL")
 
   useEffect(() => {
     fetchTrip(id as string)
@@ -128,7 +127,10 @@ function TripID() {
         </div>
         <div>
           <h2 className="text-3xl font-bold py-4">Itenerary:</h2>
-          <ItineraryItems itineraries={trip?.itinerary_items ?? []} />
+          <ItineraryItems
+            itineraries={trip?.itinerary_items ?? []}
+            trip={trip}
+          />
         </div>
       </div>
     </div>

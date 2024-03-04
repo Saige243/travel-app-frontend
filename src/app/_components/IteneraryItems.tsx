@@ -2,9 +2,10 @@ import React, { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { ItineraryItem } from "@/app/types"
 import { format, parseISO } from "date-fns"
-
+import { Trip } from "@/app/types"
 interface ItineraryItemsProps {
   itineraries: ItineraryItem[]
+  trip: Trip
 }
 
 function formatDate(dateString: string) {
@@ -17,7 +18,10 @@ function formatTime(timeString: string) {
   return format(time, "hh:mm a")
 }
 
-const ItineraryItems: React.FC<ItineraryItemsProps> = ({ itineraries }) => {
+const ItineraryItems: React.FC<ItineraryItemsProps> = ({
+  itineraries,
+  trip,
+}) => {
   const [selectedDate, setSelectedDate] = useState<string>("")
   const [filteredItems, setFilteredItems] = useState<{
     [key: string]: ItineraryItem[]
@@ -94,6 +98,24 @@ const ItineraryItems: React.FC<ItineraryItemsProps> = ({ itineraries }) => {
               ))}
             </div>
           ))}
+          <div className="flex space-x-4">
+            <div>
+              <button
+                className="px-4 mt-8 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                onClick={() => router.push(`${trip?.id}/edit/itinerary`)}
+              >
+                Edit itinerary items
+              </button>
+            </div>
+            <div>
+              <button
+                className="px-4 mt-8 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                onClick={() => router.push(`${trip?.id}/itinerary/new`)}
+              >
+                Add itinerary items
+              </button>
+            </div>
+          </div>
         </>
       ) : (
         <div className="py-6">
