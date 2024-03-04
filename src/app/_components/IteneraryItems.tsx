@@ -50,6 +50,9 @@ const ItineraryItems: React.FC<ItineraryItemsProps> = ({
     setFilteredItems(grouped)
   }, [selectedDate, itineraries])
 
+  const checkDates = itineraries.map((item) => item.date)
+  console.log(checkDates)
+
   return (
     <div>
       {itineraries.length > 0 ? (
@@ -62,7 +65,7 @@ const ItineraryItems: React.FC<ItineraryItemsProps> = ({
             <option value="">All Dates</option>
             {[...new Set(itineraries.map((item) => item.date))].map((date) => (
               <option key={date} value={date}>
-                {format(date, "EEEE, MMMM d")}
+                {formatDate(date)}
               </option>
             ))}
           </select>
