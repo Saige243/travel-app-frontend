@@ -129,7 +129,7 @@ function TripID() {
           <h2 className="text-3xl font-bold py-4">Itenerary:</h2>
           <ItineraryItems
             itineraries={trip?.itinerary_items ?? []}
-            trip={trip}
+            trip={trip ?? undefined}
           />
         </div>
       </div>

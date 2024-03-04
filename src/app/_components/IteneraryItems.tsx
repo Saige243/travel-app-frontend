@@ -5,7 +5,7 @@ import { format, parseISO } from "date-fns"
 import { Trip } from "@/app/types"
 interface ItineraryItemsProps {
   itineraries: ItineraryItem[]
-  trip: Trip
+  trip: Trip | undefined
 }
 
 function formatDate(dateString: string) {
@@ -41,7 +41,6 @@ const ItineraryItems: React.FC<ItineraryItemsProps> = ({
   }
 
   useEffect(() => {
-    console.log(selectedDate)
     const filtered = itineraries.filter((item) =>
       selectedDate ? item.date === selectedDate : true
     )
@@ -49,9 +48,6 @@ const ItineraryItems: React.FC<ItineraryItemsProps> = ({
     const grouped = groupItemsByDate(filtered)
     setFilteredItems(grouped)
   }, [selectedDate, itineraries])
-
-  const checkDates = itineraries.map((item) => item.date)
-  console.log(checkDates)
 
   return (
     <div>
