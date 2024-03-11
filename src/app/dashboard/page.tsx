@@ -26,9 +26,9 @@ function Dashboard() {
   return (
     <div>
       <h1>Hi, {userData?.first_name}!</h1>
-      <p className="pb-8">Here&apos;s your upcoming trip:</p>
       {soonestTrip ? (
         <div>
+          <p className="pb-8">Here&apos;s your upcoming trip:</p>
           <h2 className="text-xl font-bold pb-2">{soonestTrip.title}</h2>
           <p>{soonestTrip.location}</p>
           <p>{formatDate(soonestTrip.start_date)}</p>
@@ -41,7 +41,15 @@ function Dashboard() {
           </button>
         </div>
       ) : (
-        <p>No trips found.</p>
+        <div>
+          <p>No trips found - add one below!</p>
+          <button
+            className="bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 my-12 px-4 rounded"
+            onClick={() => router.push("/trips/new")}
+          >
+            Add a Trip
+          </button>
+        </div>
       )}
     </div>
   )
