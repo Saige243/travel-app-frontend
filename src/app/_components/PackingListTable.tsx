@@ -82,7 +82,13 @@ function PackingListTable({ trip }: { trip: Trip | null }) {
           ))
         ) : (
           <div className="text-center py-6">
-            <p className="text-xl">No items match the selected filters.</p>
+            <p className="text-xl">Your packing list is empty!</p>
+            <button
+              className="px-4 mt-8 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm"
+              onClick={() => router.push(`/trips/${trip?.id}/edit/packinglist`)}
+            >
+              Create packing list
+            </button>
           </div>
         )}
       </ul>
