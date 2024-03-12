@@ -82,33 +82,34 @@ function AddPackingListItemForm({ tripId }: { tripId: number }) {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
-    console.log("packingListItems", packingListItems)
 
-    packingListItems.forEach(async (item) => {
+    const saveOperations = packingListItems.map((item) => {
       const method = item.id ? "PATCH" : "POST"
       const url = item.id
         ? `http://localhost:3001/trips/${tripId}/packing_list_items/${item.id}`
         : `http://localhost:3001/trips/${tripId}/packing_list_items`
 
-      try {
-        const response = await fetch(url, {
-          method: method,
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ packing_list_item: item }),
-          credentials: "include",
-        })
-
+      return fetch(url, {
+        method: method,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ packing_list_item: item }),
+        credentials: "include",
+      }).then((response) => {
         if (!response.ok) throw new Error("Network response was not ok.")
-
-        alert("Packing list saved successfully")
-        router.push(`/trips/${tripId}`)
-        console.log("Item saved successfully", await response.json())
-      } catch (error) {
-        console.error("Failed to save item:", error)
-      }
+        return response.json()
+      })
     })
+
+    try {
+      await Promise.all(saveOperations)
+
+      alert("Packing list saved successfully")
+      router.push(`/trips/${tripId}`)
+    } catch (error) {
+      console.error("Failed to save item:", error)
+    }
   }
 
   return (
