@@ -39,6 +39,15 @@ function Dashboard() {
           >
             Go to trip
           </button>
+          <div className="py-12">
+            <h2 className="pb-4">Want to add another?</h2>
+            <button
+              className="bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded"
+              onClick={() => router.push("/trips/new")}
+            >
+              Add a Trip
+            </button>
+          </div>
         </div>
       ) : (
         <div>

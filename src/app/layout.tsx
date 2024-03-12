@@ -29,7 +29,6 @@ export default function RootLayout({
 
       const data = await res.json()
       setIsAuthenticated(data.logged_in)
-      console.log("Logged in status:", data.logged_in)
     } catch (error) {
       console.error("Failed to fetch authentication status", error)
       setIsAuthenticated(false)
