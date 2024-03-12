@@ -44,7 +44,6 @@ const ItineraryItems: React.FC<ItineraryItemsProps> = ({
     const filtered = itineraries.filter((item) =>
       selectedDate ? item.date === selectedDate : true
     )
-    console.log(filtered)
     const grouped = groupItemsByDate(filtered)
     setFilteredItems(grouped)
   }, [selectedDate, itineraries])

@@ -44,12 +44,6 @@ function EditAccommodationsForm({ trip }: { trip: Trip | null }) {
     index: number,
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    console.log(
-      "handleAccommodationChange",
-      index,
-      e.target.name,
-      e.target.value
-    )
     const updatedAccommodations = accommodations.map((acc, idx) => {
       if (idx === index) {
         return { ...acc, [e.target.name]: e.target.value }
@@ -86,8 +80,10 @@ function EditAccommodationsForm({ trip }: { trip: Trip | null }) {
 
     if (response.ok) {
       console.log("Accommodation updated successfully")
+      alert("Accommodation updated successfully!")
+      router.back()
     } else {
-      alert("Failed to update accommodation")
+      alert("Failed to update accommodation. Please try again.")
     }
   }
 

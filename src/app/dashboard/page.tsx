@@ -20,7 +20,7 @@ function Dashboard() {
 
   function formatDate(dateString: string) {
     const date = parseISO(dateString)
-    return format(date, "EEEE, MMMM d, yyyy")
+    return format(date, "EEEE, MMMM d")
   }
 
   return (
@@ -31,8 +31,10 @@ function Dashboard() {
           <p className="pb-8">Here&apos;s your upcoming trip:</p>
           <h2 className="text-xl font-bold pb-2">{soonestTrip.title}</h2>
           <p>{soonestTrip.location}</p>
-          <p>{formatDate(soonestTrip.start_date)}</p>
-          <p>{formatDate(soonestTrip.end_date)}</p>
+          <div className="py-1">
+            <span>{formatDate(soonestTrip.start_date)} - </span>
+            <span>{formatDate(soonestTrip.end_date)}</span>
+          </div>
           <button
             className="px-4 mt-8 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
             onClick={() => router.push(`trips/${soonestTrip.id}`)}
