@@ -34,7 +34,9 @@ function EditDetailsForm({ trip }: { trip: Trip | null }) {
       })
   }, [trip])
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target
     setFormData((prevState) => ({
       ...prevState,
@@ -158,13 +160,6 @@ function EditDetailsForm({ trip }: { trip: Trip | null }) {
         >
           Save trip details
         </button>
-        {/* <button
-          type="button"
-          onClick={() => router.push(`/trips/${trip.id}`)}
-          className="ml-4 bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
-        >
-          Cancel
-        </button> */}
       </form>
     </div>
   )
