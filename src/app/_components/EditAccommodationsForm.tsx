@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useEffect, useState } from "react"
-import { useParams, useRouter } from "next/navigation"
+import { useRouter } from "next/navigation"
 import { Accommodation } from "../types"
 
 interface AccommodationFormState {
@@ -36,7 +36,18 @@ function EditAccommodationsForm({ trip }: { trip: Trip | null }) {
         : trip.accommodations
         ? [trip.accommodations]
         : []
-      setAccommodations(accommodationsArray)
+
+      const accommodationsCamelCase = accommodationsArray.map((acc) => ({
+        id: acc.id,
+        name: acc.name,
+        address: acc.address,
+        checkInDate: acc.check_in_date,
+        checkOutDate: acc.check_out_date,
+        contactNumber: acc.contact_number,
+        notes: acc.notes,
+      }))
+
+      setAccommodations(accommodationsCamelCase)
     }
   }, [trip])
 
@@ -140,7 +151,7 @@ function EditAccommodationsForm({ trip }: { trip: Trip | null }) {
                 id={`checkInDate-${index}`}
                 type="date"
                 name="checkInDate"
-                value={acc.check_in_date}
+                value={acc.checkInDate}
                 onChange={(e) => handleAccommodationChange(index, e)}
                 className="input input-bordered w-full p-2 rounded"
               />
@@ -156,7 +167,7 @@ function EditAccommodationsForm({ trip }: { trip: Trip | null }) {
                 id={`checkOutDate-${index}`}
                 type="date"
                 name="checkOutDate"
-                value={acc.check_out_date}
+                value={acc.checkOutDate}
                 onChange={(e) => handleAccommodationChange(index, e)}
                 className="input input-bordered w-full p-2 rounded"
               />
@@ -172,7 +183,7 @@ function EditAccommodationsForm({ trip }: { trip: Trip | null }) {
                 id={`contactNumber-${index}`}
                 type="tel"
                 name="contactNumber"
-                value={acc.contact_number}
+                value={acc.contactNumber}
                 onChange={(e) => handleAccommodationChange(index, e)}
                 className="input input-bordered w-full p-2 rounded"
               />

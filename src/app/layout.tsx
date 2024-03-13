@@ -43,7 +43,7 @@ export default function RootLayout({
     <html lang="en">
       <body className="min-h-screen">
         {isAuthenticated && <Navbar />}
-        <main className="lg:px-20 lg:py-12">{children}</main>
+        <main className="lg:px-20 xl:px-72 lg:py-12">{children}</main>
       </body>
     </html>
   )
