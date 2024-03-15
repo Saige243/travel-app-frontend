@@ -11,7 +11,7 @@ interface AuthContextType {
 
 const defaultContextValue: AuthContextType = {
   isAuthenticated: false,
-  setIsAuthenticated: () => {}, // No-op function
+  setIsAuthenticated: () => {},
 }
 
 const AuthContext = createContext<AuthContextType>(defaultContextValue)
@@ -68,7 +68,7 @@ export default function RootLayout({
       <html lang="en">
         <body className="min-h-screen">
           <Navbar />
-          <main className="lg:px-20 xl:px-72 lg:py-12">{children}</main>
+          <main className="lg:px-20 xl:px-72">{children}</main>
         </body>
       </html>
     </AuthProvider>
