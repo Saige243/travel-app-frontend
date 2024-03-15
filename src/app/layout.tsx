@@ -2,13 +2,21 @@
 
 import "./globals.css"
 import Navbar from "./_components/Navbar"
-import { useState, useEffect } from "react"
+import React, { createContext, useState, useContext, useEffect } from "react"
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
+interface AuthContextType {
+  isAuthenticated: boolean
+  setIsAuthenticated: (value: boolean) => void
+}
+
+const defaultContextValue: AuthContextType = {
+  isAuthenticated: false,
+  setIsAuthenticated: () => {}, // No-op function
+}
+
+const AuthContext = createContext<AuthContextType>(defaultContextValue)
+
+export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
 
   const getUser = async () => {
@@ -19,7 +27,7 @@ export default function RootLayout({
         headers: {
           "Content-Type": "application/json",
         },
-        credentials: "include", // Necessary for cookies if session-based authentication
+        credentials: "include",
       })
 
       if (!res.ok) {
@@ -40,11 +48,29 @@ export default function RootLayout({
   }, [])
 
   return (
-    <html lang="en">
-      <body className="min-h-screen">
-        {isAuthenticated && <Navbar />}
-        <main className="lg:px-20 xl:px-72 lg:py-12">{children}</main>
-      </body>
-    </html>
+    <AuthContext.Provider
+      value={{ isAuthenticated, setIsAuthenticated } as any}
+    >
+      {children}
+    </AuthContext.Provider>
+  )
+}
+
+export const useAuth = () => useContext(AuthContext)
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode
+}>) {
+  return (
+    <AuthProvider>
+      <html lang="en">
+        <body className="min-h-screen">
+          <Navbar />
+          <main className="lg:px-20 xl:px-72 lg:py-12">{children}</main>
+        </body>
+      </html>
+    </AuthProvider>
   )
 }

@@ -2,11 +2,13 @@
 
 import { useState, useEffect, useRef } from "react"
 import { useRouter } from "next/navigation"
+import { useAuth } from "@/app/layout"
 
 function Navbar() {
   const router = useRouter()
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const dropdownRef = useRef(null)
+  const { isAuthenticated, setIsAuthenticated } = useAuth()
 
   async function logout() {
     const res = await fetch("http://localhost:3001/users/sign_out", {
@@ -15,7 +17,7 @@ function Navbar() {
     })
 
     if (res.ok) {
-      console.log("Logout successful")
+      setIsAuthenticated(false)
       setIsDropdownOpen(false)
       router.push("/")
     } else {
@@ -38,6 +40,8 @@ function Navbar() {
       document.removeEventListener("mousedown", handleClickOutside)
     }
   }, [])
+
+  if (!isAuthenticated) return null
 
   return (
     <nav className="bg-blue-500 p-4 text-white flex justify-between items-center">

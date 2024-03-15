@@ -1,8 +1,10 @@
 import { FormEvent } from "react"
 import { useRouter } from "next/navigation"
+import { useAuth } from "@/app/layout"
 
 function LoginForm({ onSwitch }: { onSwitch: () => void }) {
   const router = useRouter()
+  const { setIsAuthenticated } = useAuth()
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -24,10 +26,9 @@ function LoginForm({ onSwitch }: { onSwitch: () => void }) {
     })
 
     if (response.ok) {
-      console.log("Login successful")
+      setIsAuthenticated(true)
       router.push("/dashboard")
     } else {
-      // Handle errors
       console.error("Login failed", response)
     }
   }
