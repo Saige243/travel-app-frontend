@@ -58,9 +58,7 @@ function EditDetailsForm({ trip }: { trip: Trip | null }) {
     })
 
     if (res.ok) {
-      console.log("Trip updated successfully")
-      alert("Trip updated successfully")
-      router.push(`/trips/${tripId}`)
+      alert("Details updated successfully!")
     } else {
       console.error("Failed to update trip")
     }

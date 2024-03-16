@@ -27,7 +27,7 @@ function Dashboard() {
     <div>
       <h1 className="text-center text-5xl">Hi, {userData?.first_name}!</h1>
       {soonestTrip && (
-        <p className="text-center text-3xl py-8">
+        <p className="text-center text-3xl pt-4 pb-12">
           Here&apos;s your upcoming trip:
         </p>
       )}

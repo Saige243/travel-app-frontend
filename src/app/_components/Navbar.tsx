@@ -44,7 +44,7 @@ function Navbar() {
   if (!isAuthenticated) return null
 
   return (
-    <nav className="bg-blue-500 p-4 text-white flex justify-between items-center">
+    <nav className="bg-blue-500 p-4 text-white flex justify-between items-center mb-12">
       <div className="font-semibold text-xl">
         <button onClick={() => router.push("/dashboard")}>TravelApp</button>
       </div>

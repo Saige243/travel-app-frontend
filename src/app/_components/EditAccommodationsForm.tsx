@@ -92,7 +92,6 @@ function EditAccommodationsForm({ trip }: { trip: Trip | null }) {
     if (response.ok) {
       console.log("Accommodation updated successfully")
       alert("Accommodation updated successfully!")
-      router.back()
     } else {
       alert("Failed to update accommodation. Please try again.")
     }
