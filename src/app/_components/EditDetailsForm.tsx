@@ -3,15 +3,6 @@
 import React, { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { Trip } from "../types"
-import { de } from "date-fns/locale"
-
-interface FormData {
-  title: string
-  location: string
-  start_date: string
-  end_date: string
-  description: string
-}
 
 function EditDetailsForm({ trip }: { trip: Trip | null }) {
   const router = useRouter()
