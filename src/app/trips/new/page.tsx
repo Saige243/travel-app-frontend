@@ -1,12 +1,14 @@
 "use client"
 
 import React, { useState, FormEvent } from "react"
+import { useRouter } from "next/navigation"
 
 function NewTrip() {
   const [title, setTitle] = useState("")
   const [location, setLocation] = useState("")
   const [startDate, setStartDate] = useState("")
   const [endDate, setEndDate] = useState("")
+  const router = useRouter()
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -25,7 +27,8 @@ function NewTrip() {
     })
 
     if (res.ok) {
-      console.log("Trip planned successfully")
+      alert("Trip planned successfully")
+      router.back()
     } else {
       console.error("Failed to plan trip")
     }

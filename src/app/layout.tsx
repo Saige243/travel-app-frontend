@@ -68,7 +68,7 @@ export default function RootLayout({
       <html lang="en">
         <body className="min-h-screen">
           <Navbar />
-          <main className="lg:px-20 xl:px-72 pb-16">{children}</main>
+          <main className="lg:px-20 xl:px-72">{children}</main>
         </body>
       </html>
     </AuthProvider>
