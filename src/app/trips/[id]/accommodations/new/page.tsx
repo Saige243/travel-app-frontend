@@ -58,6 +58,7 @@ export default function AddAccommodation() {
     )
 
     if (response.ok) {
+      alert("Accommodation added successfully!")
       router.back()
     } else {
       alert("Failed to add accommodation")
