@@ -137,7 +137,7 @@ function EditDetailsForm({ trip }: { trip: Trip | null }) {
           <textarea
             id="description"
             name="description"
-            value={formData.description}
+            value={formData.description || ""}
             onChange={handleChange}
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2"
             rows={3}
