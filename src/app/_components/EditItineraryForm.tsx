@@ -3,8 +3,6 @@
 import React, { useEffect, useState } from "react"
 import { Trip, ItineraryItem } from "../types"
 import { useRouter } from "next/navigation"
-import { format, parseISO } from "date-fns"
-import { utcToZonedTime, format as tzFormat } from "date-fns-tz"
 
 function EditItineraryForm({ trip }: { trip: Trip | null }) {
   const router = useRouter()
@@ -38,23 +36,6 @@ function EditItineraryForm({ trip }: { trip: Trip | null }) {
     index: number,
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    const { name, value } = e.target
-    console.log(e.target)
-
-    if (name === "time") {
-      const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
-      const currentDate = new Date()
-      const dateTimeString = `${format(
-        currentDate,
-        "yyyy-MM-dd"
-      )}T${value}:00.000Z`
-
-      const zonedTime = utcToZonedTime(parseISO(dateTimeString), timeZone)
-
-      const formattedTime = tzFormat(zonedTime, "HH:mm", { timeZone })
-      console.log(formattedTime)
-    }
-
     const newItineraryItems: ItineraryItem[] = [...itineraryItems]
     newItineraryItems[index] = {
       ...newItineraryItems[index],
@@ -75,11 +56,6 @@ function EditItineraryForm({ trip }: { trip: Trip | null }) {
     const startDate = new Date(trip.start_date)
     const endDate = new Date(trip.end_date)
 
-    const updatedItems = itineraryItems.map((item) => {
-      const combinedDateTime = `${item.date}T${item.time}`
-      return { ...item, datetime: combinedDateTime }
-    })
-
     for (const item of itineraryItems) {
       const itemDate = new Date(item.date)
       if (itemDate < startDate || itemDate > endDate) {
@@ -90,50 +66,41 @@ function EditItineraryForm({ trip }: { trip: Trip | null }) {
       }
     }
 
-    const payload = updatedItems.map((item) => ({
-      ...item,
-      datetime: new Date(item.datetime).toISOString(),
-    }))
+    const saveIteneraryItem = async (item: ItineraryItem) => {
+      const url = item.id
+        ? `http://localhost:3001/trips/${trip?.id}/itinerary_items/${item.id}`
+        : `http://localhost:3001/trips/${trip?.id}/itinerary_items`
+      const method = item.id ? "PATCH" : "POST"
 
-    console.log(payload)
+      const res = await fetch(url, {
+        method,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          itinerary_item: { ...item, trip_id: trip?.id },
+        }),
+        credentials: "include",
+      })
 
-    // console.log(payload)
+      if (!res.ok) {
+        console.error("Failed to save itinerary item", res)
+        alert("Failed to save itinerary item. Please try again.")
+      }
 
-    // const saveIteneraryItem = async (item: ItineraryItem) => {
-    //   const url = item.id
-    //     ? `http://localhost:3001/trips/${trip?.id}/itinerary_items/${item.id}`
-    //     : `http://localhost:3001/trips/${trip?.id}/itinerary_items`
-    //   const method = item.id ? "PATCH" : "POST"
+      return res.json()
+    }
+    try {
+      for (const item of itineraryItems) {
+        await saveIteneraryItem(item)
+      }
 
-    //   const res = await fetch(url, {
-    //     method,
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify({
-    //       itinerary_item: { ...item, trip_id: trip?.id },
-    //     }),
-    //     credentials: "include",
-    //   })
-
-    //   if (!res.ok) {
-    //     console.error("Failed to save itinerary item", res)
-    //     alert("Failed to save itinerary item. Please try again.")
-    //   }
-
-    //   return res.json()
-    // }
-    // try {
-    //   for (const item of itineraryItems) {
-    //     await saveIteneraryItem(item)
-    //   }
-
-    //   alert("Itinerary saved!")
-    //   router.push(`/trips/${trip?.id}`)
-    // } catch (error) {
-    //   console.error("Failed to save itinerary", error)
-    //   alert("Failed to save itinerary. Please try again.")
-    // }
+      alert("Itinerary saved!")
+      router.push(`/trips/${trip?.id}`)
+    } catch (error) {
+      console.error("Failed to save itinerary", error)
+      alert("Failed to save itinerary. Please try again.")
+    }
   }
 
   const handleDelete = async ({
