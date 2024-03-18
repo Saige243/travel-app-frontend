@@ -122,7 +122,7 @@ function AddPackingListItemForm({ tripId }: { tripId: number }) {
           <div className="w-1/3">
             <label
               htmlFor={`category-${item.id || item.tempId}`}
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-medium text-gray-700 dark:text-white"
             >
               Category
             </label>
@@ -145,7 +145,7 @@ function AddPackingListItemForm({ tripId }: { tripId: number }) {
           <div className="flex-1">
             <label
               htmlFor={`description-${item.id}`}
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-medium text-gray-700 dark:text-white"
             >
               Description
             </label>
