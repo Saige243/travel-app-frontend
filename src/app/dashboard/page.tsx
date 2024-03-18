@@ -33,7 +33,7 @@ function Dashboard() {
       )}
       {soonestTrip ? (
         <>
-          <div className="flex items-center flex-row bg-slate-50 rounded-md justify-between px-4 py-5">
+          <div className="flex items-center flex-row bg-slate-50 rounded-md justify-between px-4 py-5 text-black">
             <div>
               <h2 className="text-xl font-bold">{soonestTrip.title}</h2>
             </div>

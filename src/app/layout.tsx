@@ -66,9 +66,9 @@ export default function RootLayout({
   return (
     <AuthProvider>
       <html lang="en">
-        <body className="min-h-screen">
+        <body className="min-h-screen dark:bg-slate-700">
           <Navbar />
-          <main className="lg:px-20 xl:px-72">{children}</main>
+          <main className="lg:px-20 xl:px-72 ">{children}</main>
         </body>
       </html>
     </AuthProvider>
