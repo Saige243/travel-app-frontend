@@ -107,37 +107,39 @@ function EditAccommodationsForm({ trip }: { trip: Trip | null }) {
             onSubmit={(e) => handleAccommodationSubmit(e, index)}
             className="mb-8"
           >
-            <div className="mb-4">
-              <label
-                htmlFor={`name-${index}`}
-                className="block font-medium text-sm mb-2"
-              >
-                Name
-              </label>
-              <input
-                id={`name-${index}`}
-                type="text"
-                name="name"
-                value={acc.name}
-                onChange={(e) => handleAccommodationChange(index, e)}
-                className="input input-bordered w-full p-2 rounded"
-              />
-            </div>
-            <div className="mb-4">
-              <label
-                htmlFor={`address-${index}`}
-                className="block font-medium text-sm mb-2"
-              >
-                Address
-              </label>
-              <textarea
-                id={`address-${index}`}
-                name="address"
-                value={acc.address}
-                onChange={(e) => handleAccommodationChange(index, e)}
-                className="textarea textarea-bordered w-full p-2 rounded"
-                rows={3}
-              />
+            <div className="flex flex-row">
+              <div className="mb-4">
+                <label
+                  htmlFor={`name-${index}`}
+                  className="block font-medium text-sm mb-2"
+                >
+                  Names
+                </label>
+                <input
+                  id={`name-${index}`}
+                  type="text"
+                  name="name"
+                  value={acc.name}
+                  onChange={(e) => handleAccommodationChange(index, e)}
+                  className="input input-bordered w-full p-2 rounded"
+                />
+                <div className="mb-4">
+                  <label
+                    htmlFor={`address-${index}`}
+                    className="block font-medium text-sm mb-2"
+                  >
+                    Address
+                  </label>
+                  <textarea
+                    id={`address-${index}`}
+                    name="address"
+                    value={acc.address}
+                    onChange={(e) => handleAccommodationChange(index, e)}
+                    className="textarea textarea-bordered w-full p-2 rounded"
+                    rows={3}
+                  />
+                </div>
+              </div>
             </div>
             <div className="mb-4">
               <label

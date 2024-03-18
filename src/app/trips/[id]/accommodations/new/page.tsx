@@ -71,63 +71,66 @@ export default function AddAccommodation() {
         Add Accommodation for {trip?.title}
       </h1>
       <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label htmlFor="name" className="block text-sm font-medium pb-1">
-            Name
-          </label>
-          <input
-            type="text"
-            name="name"
-            placeholder="Name (e.g. Hotel Example, Airbnb Example)"
-            value={formData.name}
-            onChange={handleChange}
-            className="input input-bordered w-full p-1 rounded-sm"
-          />
+        <div className="md:flex w-full md:space-x-4">
+          <div className="md:w-1/2">
+            <label htmlFor="name" className="block text-sm font-medium pb-1">
+              Name
+            </label>
+            <input
+              type="text"
+              name="name"
+              placeholder="Name (e.g. Hotel Example, Airbnb Example)"
+              value={formData.name}
+              onChange={handleChange}
+              className="input input-bordered w-full p-1 rounded-sm"
+            />
+          </div>
+          <div className="md:w-1/2">
+            <label htmlFor="address" className="block text-sm font-medium pb-1">
+              Address
+            </label>
+            <input
+              name="address"
+              placeholder="Address"
+              value={formData.address}
+              onChange={handleChange}
+              className="textarea textarea-bordered w-full p-1 rounded-sm"
+            />
+          </div>
         </div>
-        <div>
-          <label htmlFor="address" className="block text-sm font-medium pb-1">
-            Address
-          </label>
-          <textarea
-            name="address"
-            placeholder="Address"
-            value={formData.address}
-            onChange={handleChange}
-            className="textarea textarea-bordered w-full p-1 rounded-sm"
-            rows={3}
-          />
+        <div className="flex w-full space-x-4">
+          <div className="w-1/2">
+            <label
+              htmlFor="checkInDate"
+              className="block text-sm font-medium pb-1"
+            >
+              Check-in Date
+            </label>
+            <input
+              type="date"
+              name="checkInDate"
+              value={formData.checkInDate}
+              onChange={handleChange}
+              className="input input-bordered w-full p-1 rounded-sm"
+            />
+          </div>
+          <div className="w-1/2">
+            <label
+              htmlFor="checkOutDate"
+              className="block text-sm font-medium pb-1"
+            >
+              Check-out Date
+            </label>
+            <input
+              type="date"
+              name="checkOutDate"
+              value={formData.checkOutDate}
+              onChange={handleChange}
+              className="input input-bordered w-full p-1 rounded-sm"
+            />
+          </div>
         </div>
-        <div>
-          <label
-            htmlFor="checkInDate"
-            className="block text-sm font-medium pb-1"
-          >
-            Check-in Date
-          </label>
-          <input
-            type="date"
-            name="checkInDate"
-            value={formData.checkInDate}
-            onChange={handleChange}
-            className="input input-bordered w-full p-1 rounded-sm"
-          />
-        </div>
-        <div>
-          <label
-            htmlFor="checkOutDate"
-            className="block text-sm font-medium pb-1"
-          >
-            Check-out Date
-          </label>
-          <input
-            type="date"
-            name="checkOutDate"
-            value={formData.checkOutDate}
-            onChange={handleChange}
-            className="input input-bordered w-full p-1 rounded-sm"
-          />
-        </div>
-        <div>
+        <div className="md:w-1/2">
           <label
             htmlFor="contactNumber"
             className="block text-sm font-medium pb-1"
