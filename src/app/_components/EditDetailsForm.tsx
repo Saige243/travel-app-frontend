@@ -66,7 +66,7 @@ function EditDetailsForm({ trip }: { trip: Trip | null }) {
         <div>
           <label
             htmlFor="title"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-medium text-gray-700 dark:text-white"
           >
             Title
           </label>
@@ -82,7 +82,7 @@ function EditDetailsForm({ trip }: { trip: Trip | null }) {
         <div>
           <label
             htmlFor="location"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-medium text-gray-700 dark:text-white"
           >
             Location
           </label>
@@ -98,7 +98,7 @@ function EditDetailsForm({ trip }: { trip: Trip | null }) {
         <div>
           <label
             htmlFor="start_date"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-medium text-gray-700 dark:text-white"
           >
             Start Date
           </label>
@@ -114,7 +114,7 @@ function EditDetailsForm({ trip }: { trip: Trip | null }) {
         <div className="pb-4">
           <label
             htmlFor="end_date"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-medium text-gray-700 dark:text-white"
           >
             End Date
           </label>
@@ -130,7 +130,7 @@ function EditDetailsForm({ trip }: { trip: Trip | null }) {
         <div className="pb-4">
           <label
             htmlFor="description"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-sm font-medium text-gray-700 dark:text-white"
           >
             Description
           </label>
