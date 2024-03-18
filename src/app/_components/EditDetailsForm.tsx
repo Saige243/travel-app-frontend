@@ -63,69 +63,73 @@ function EditDetailsForm({ trip }: { trip: Trip | null }) {
     <div className="">
       <h1 className="text-xl font-semibold mb-4">Edit trip details</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label
-            htmlFor="title"
-            className="block text-sm font-medium text-gray-700 dark:text-white"
-          >
-            Title
-          </label>
-          <input
-            id="title"
-            type="text"
-            name="title"
-            value={formData.title}
-            onChange={handleChange}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2"
-          />
+        <div className="flex space-x-4">
+          <div className="md:w-1/2">
+            <label
+              htmlFor="title"
+              className="block text-sm font-medium text-gray-700 dark:text-white"
+            >
+              Title
+            </label>
+            <input
+              id="title"
+              type="text"
+              name="title"
+              value={formData.title}
+              onChange={handleChange}
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2"
+            />
+          </div>
+          <div className="md:w-1/2">
+            <label
+              htmlFor="location"
+              className="block text-sm font-medium text-gray-700 dark:text-white"
+            >
+              Location
+            </label>
+            <input
+              id="location"
+              type="text"
+              name="location"
+              value={formData.location}
+              onChange={handleChange}
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2"
+            />
+          </div>
         </div>
-        <div>
-          <label
-            htmlFor="location"
-            className="block text-sm font-medium text-gray-700 dark:text-white"
-          >
-            Location
-          </label>
-          <input
-            id="location"
-            type="text"
-            name="location"
-            value={formData.location}
-            onChange={handleChange}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2"
-          />
-        </div>
-        <div>
-          <label
-            htmlFor="start_date"
-            className="block text-sm font-medium text-gray-700 dark:text-white"
-          >
-            Start Date
-          </label>
-          <input
-            id="start_date"
-            type="date"
-            name="start_date"
-            value={formData.start_date}
-            onChange={handleChange}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2"
-          />
-        </div>
-        <div className="pb-4">
-          <label
-            htmlFor="end_date"
-            className="block text-sm font-medium text-gray-700 dark:text-white"
-          >
-            End Date
-          </label>
-          <input
-            id="end_date"
-            type="date"
-            name="end_date"
-            value={formData.end_date}
-            onChange={handleChange}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2"
-          />
+        <div className="flex space-x-4">
+          <div className="md:w-1/2">
+            <label
+              htmlFor="start_date"
+              className="block text-sm font-medium text-gray-700 dark:text-white"
+            >
+              Start Date
+            </label>
+            <input
+              id="start_date"
+              type="date"
+              name="start_date"
+              value={formData.start_date}
+              onChange={handleChange}
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2"
+            />
+          </div>
+          <div className="pb-4 md:w-1/2">
+            <label
+              htmlFor="end_date"
+              className="block text-sm font-medium text-gray-700 dark:text-white"
+            >
+              End Date
+            </label>
+            <input
+              id="end_date"
+              type="date"
+              name="end_date"
+              value={formData.end_date}
+              onChange={handleChange}
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2"
+            />
+          </div>
         </div>
         <div className="pb-4">
           <label
