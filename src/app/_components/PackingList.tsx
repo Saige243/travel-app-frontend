@@ -105,7 +105,7 @@ function AddPackingListItemForm({ tripId }: { tripId: number }) {
     try {
       await Promise.all(saveOperations)
 
-      alert("Packing list saved successfully")
+      alert("Packing list saved successfully!")
       router.push(`/trips/${tripId}`)
     } catch (error) {
       console.error("Failed to save item:", error)
@@ -149,23 +149,30 @@ function AddPackingListItemForm({ tripId }: { tripId: number }) {
             >
               Description
             </label>
-            <input
-              type="text"
-              id={`description-${item.id || item.tempId}`}
-              value={item.description}
-              onChange={(e) =>
-                handleItemChange(index, "description", e.target.value, item.id)
-              }
-              className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            />
+            <div className="flex space-x-4">
+              <input
+                type="text"
+                id={`description-${item.id || item.tempId}`}
+                value={item.description}
+                onChange={(e) =>
+                  handleItemChange(
+                    index,
+                    "description",
+                    e.target.value,
+                    item.id
+                  )
+                }
+                className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              />
+              <button
+                type="button"
+                onClick={() => handleRemoveItem(item.id, item.tempId)}
+                className="py-1 px-3 bg-red-500 text-white rounded hover:bg-red-700"
+              >
+                Remove
+              </button>
+            </div>
           </div>
-          <button
-            type="button"
-            onClick={() => handleRemoveItem(item.id, item.tempId)}
-            className="py-2 px-4 bg-red-500 text-white rounded hover:bg-red-700"
-          >
-            Remove
-          </button>
         </div>
       ))}
       <div>
@@ -185,7 +192,7 @@ function AddPackingListItemForm({ tripId }: { tripId: number }) {
           Save Packing List
         </button>
       </div>
-      <div className="pt-12">
+      <div>
         <button
           type="button"
           className="inline-flex justify-center my-4 py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green-500 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
