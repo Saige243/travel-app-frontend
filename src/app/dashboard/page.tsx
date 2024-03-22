@@ -5,6 +5,7 @@ import { useTripData } from "../_hooks/useTripData"
 import { useFetchUser } from "../_hooks/useFetchUser"
 import { useRouter } from "next/navigation"
 import { format, parseISO } from "date-fns"
+import { Trip } from "../types"
 
 function Dashboard() {
   const { soonestTrip, fetchSoonestTrip, isLoading, error } = useTripData()
@@ -23,46 +24,48 @@ function Dashboard() {
     return format(date, "EEEE, MMMM d")
   }
 
+  const SoonestTripBlock = (soonestTrip: Trip) => (
+    <>
+      <p className="text-center text-3xl pt-4 pb-12">
+        Here&apos;s your upcoming trip:
+      </p>
+      <div className="flex items-center flex-row bg-slate-50 rounded-md justify-between px-4 py-5 text-black">
+        <div>
+          <h2 className="text-xl font-bold">{soonestTrip.title}</h2>
+        </div>
+        <div>
+          <p>{soonestTrip.location}</p>
+        </div>
+        <div className="py-1">
+          <span>{formatDate(soonestTrip.start_date)} - </span>
+          <span>{formatDate(soonestTrip.end_date)}</span>
+        </div>
+        <div className="flex items-center text-center place-items-center content-center justify-center">
+          <button
+            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+            onClick={() => router.push(`trips/${soonestTrip.id}`)}
+          >
+            Go to trip
+          </button>
+        </div>
+      </div>
+      <div className="py-12">
+        <h2 className="pb-4">Want to add another?</h2>
+        <button
+          className="bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded"
+          onClick={() => router.push("/trips/new")}
+        >
+          Add a Trip
+        </button>
+      </div>
+    </>
+  )
+
   return (
     <div>
       <h1 className="text-center text-5xl">Hi, {userData?.first_name}!</h1>
-      {soonestTrip && (
-        <p className="text-center text-3xl pt-4 pb-12">
-          Here&apos;s your upcoming trip:
-        </p>
-      )}
       {soonestTrip ? (
-        <>
-          <div className="flex items-center flex-row bg-slate-50 rounded-md justify-between px-4 py-5 text-black">
-            <div>
-              <h2 className="text-xl font-bold">{soonestTrip.title}</h2>
-            </div>
-            <div>
-              <p>{soonestTrip.location}</p>
-            </div>
-            <div className="py-1">
-              <span>{formatDate(soonestTrip.start_date)} - </span>
-              <span>{formatDate(soonestTrip.end_date)}</span>
-            </div>
-            <div className="flex items-center text-center place-items-center content-center justify-center">
-              <button
-                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-                onClick={() => router.push(`trips/${soonestTrip.id}`)}
-              >
-                Go to trip
-              </button>
-            </div>
-          </div>
-          <div className="py-12">
-            <h2 className="pb-4">Want to add another?</h2>
-            <button
-              className="bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded"
-              onClick={() => router.push("/trips/new")}
-            >
-              Add a Trip
-            </button>
-          </div>
-        </>
+        <SoonestTripBlock {...soonestTrip} />
       ) : (
         <div>
           <p>No trips found - add one below!</p>
