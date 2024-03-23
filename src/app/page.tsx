@@ -1,11 +1,21 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Login from "./_components/LoginForm"
 import Signup from "./_components/SignupForm"
+import { useRouter } from "next/navigation"
+import { useAuth } from "@/app/layout"
 
 export default function Home() {
   const [isLoginView, setIsLoginView] = useState(true)
+  const { isAuthenticated } = useAuth()
+  const router = useRouter()
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.push("/dashboard")
+    }
+  }, [isAuthenticated])
 
   const toggleView = () => setIsLoginView(!isLoginView)
 
