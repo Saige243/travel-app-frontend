@@ -5,7 +5,7 @@ import { FormEvent } from "react"
 import { useTripData } from "../_hooks/useTripData"
 import { useRouter } from "next/navigation"
 import { v4 as uuidv4 } from "uuid"
-
+import { Button } from "./Button"
 interface PackingListItem {
   category: string
   description: string
@@ -164,42 +164,29 @@ function AddPackingListItemForm({ tripId }: { tripId: number }) {
                 }
                 className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               />
-              <button
+              <Button
                 type="button"
                 onClick={() => handleRemoveItem(item.id, item.tempId)}
-                className="py-1 px-3 bg-red-500 text-white rounded hover:bg-red-700"
-              >
-                Remove
-              </button>
+                text="Remove"
+                className="bg-red-500"
+              />
             </div>
           </div>
         </div>
       ))}
       <div>
-        <button
-          type="button"
-          onClick={handleAddItem}
-          className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green-500 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-        >
-          Add Another Item
-        </button>
+        <Button type="button" onClick={handleAddItem} text="Add Another Item" />
       </div>
       <div className="pt-12">
-        <button
-          type="submit"
-          className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-500 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-        >
-          Save Packing List
-        </button>
+        <Button type="submit" text="Save Packing List" />
       </div>
       <div>
-        <button
+        <Button
           type="button"
-          className="inline-flex justify-center my-4 py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green-500 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
           onClick={() => router.push(`/trips/${tripId}`)}
-        >
-          Back to trip
-        </button>
+          text="Back to trip"
+          className="bg-green-500"
+        />
       </div>
     </form>
   )
