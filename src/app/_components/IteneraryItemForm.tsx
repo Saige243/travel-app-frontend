@@ -3,6 +3,7 @@
 import React, { useState } from "react"
 import { Trip, ItineraryItem } from "../types"
 import { useRouter } from "next/navigation"
+import { Button } from "./Button"
 
 function AddItineraryItemForm({ trip }: { trip: Trip | null }) {
   const router = useRouter()
@@ -152,19 +153,12 @@ function AddItineraryItemForm({ trip }: { trip: Trip | null }) {
         </div>
       ))}
       <div className="flex justify-start pt-4">
-        <button
-          type="button"
+        <Button
+          text="Add Another Item"
           onClick={handleAddItem}
-          className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-        >
-          Add another item
-        </button>
-        <button
-          type="submit"
-          className="ml-4 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-        >
-          Submit
-        </button>
+          className="mr-4"
+        />
+        <Button text="Submit" type="submit" className="bg-green-600" />
       </div>
     </form>
   )

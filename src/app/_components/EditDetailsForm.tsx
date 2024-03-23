@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { Trip } from "../types"
+import { Button } from "./Button"
 
 function EditDetailsForm({ trip }: { trip: Trip | null }) {
   const router = useRouter()
@@ -147,12 +148,7 @@ function EditDetailsForm({ trip }: { trip: Trip | null }) {
             rows={3}
           ></textarea>
         </div>
-        <button
-          type="submit"
-          className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        >
-          Save trip details
-        </button>
+        <Button text="Save trip details" type="submit" />
       </form>
     </div>
   )

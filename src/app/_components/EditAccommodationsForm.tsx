@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { Accommodation } from "../types"
+import { Button } from "./Button"
 
 interface AccommodationFormState {
   id: string
@@ -210,23 +211,16 @@ function EditAccommodationsForm({ trip }: { trip: Trip | null }) {
                 />
               </div>
             </div>
-            <button
-              type="submit"
-              className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-            >
-              Update Accommodations
-            </button>
+            <Button text="Update Accommodations" type="submit" />
           </form>
         ))
       ) : (
         <div className="text-center py-6">
           <p className="text-xl">You have no accommodations!</p>
-          <button
-            className="px-4 mt-8 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+          <Button
+            text="Add accommodations"
             onClick={() => router.push(`/trips/${trip?.id}/accommodations/new`)}
-          >
-            Add accommodations
-          </button>
+          />
         </div>
       )}
     </div>

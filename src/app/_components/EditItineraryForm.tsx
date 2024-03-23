@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react"
 import { Trip, ItineraryItem } from "../types"
 import { useRouter } from "next/navigation"
+import { Button } from "./Button"
 
 function EditItineraryForm({ trip }: { trip: Trip | null }) {
   const router = useRouter()
@@ -180,29 +181,20 @@ function EditItineraryForm({ trip }: { trip: Trip | null }) {
             onChange={(e) => handleChange(index, e)}
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2"
           />
-          <button
-            className="p-1 px-2 bg-red-500 text-white rounded-md"
-            onClick={(e) => handleDelete({ itemId: item.id, e })}
-          >
-            Delete Item
-          </button>
+          <Button
+            text="Delete Item"
+            className="bg-red-500"
+            onClick={(e: any) => handleDelete({ itemId: item.id, e })}
+          />
         </div>
       ))}
       <div className="flex justify-start pt-4 pb-4">
-        <button
-          type="submit"
-          className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-        >
-          Save Itinerary
-        </button>
+        <Button text="Save Itinerary" type="submit" className="bg-green-600" />
       </div>
-      <button
-        type="button"
+      <Button
+        text="Add more items"
         onClick={() => router.push(`/trips/${trip?.id}/itinerary/new`)}
-        className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-      >
-        Add more items
-      </button>
+      />
     </form>
   )
 }
