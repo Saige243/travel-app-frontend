@@ -55,7 +55,7 @@ function PackingListTable({ trip }: { trip: Trip | null }) {
         <h2 className="px-2 font-bold">Item</h2>
         <h2 className="px-2 font-bold text-right">Packed?</h2>
       </div>
-      <ul className="divide-y divide-gray-200">
+      <ul className="divide-y divide-gray-200 pb-8">
         {filteredItems.length > 0 &&
           filteredItems.map((item: PackingListItem) => (
             <li

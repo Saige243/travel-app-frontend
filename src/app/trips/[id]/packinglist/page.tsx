@@ -101,7 +101,7 @@ function PackingListPage() {
         </select>
       </div>
 
-      <ol className="divide-y divide-gray-400 list-decimal">
+      <ol className="divide-y divide-gray-400 list-decimal pb-8">
         {filteredItems.map((item) => (
           <li
             key={item.id}
