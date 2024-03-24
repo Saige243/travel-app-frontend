@@ -1,6 +1,7 @@
 import { FormEvent } from "react"
 import { useRouter } from "next/navigation"
 import { useAuth } from "@/app/layout"
+import { Button } from "./Button"
 
 function LoginForm({ onSwitch }: { onSwitch: () => void }) {
   const router = useRouter()
@@ -72,22 +73,12 @@ function LoginForm({ onSwitch }: { onSwitch: () => void }) {
           />
         </div>
         <div className="text-center">
-          <button
-            type="submit"
-            className="w-full px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-          >
-            Sign In
-          </button>
+          <Button text="Sign In" type="submit" />
         </div>
       </form>
       <div className="mt-4 text-center">
-        Don&apos;t have an account?{" "}
-        <button
-          onClick={onSwitch}
-          className="text-indigo-600 hover:text-indigo-500 cursor-pointer"
-        >
-          Sign up
-        </button>
+        Don&apos;t have an account?
+        <Button text="Sign Up" onClick={onSwitch} />
       </div>
     </div>
   )

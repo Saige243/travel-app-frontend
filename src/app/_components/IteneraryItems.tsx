@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation"
 import { ItineraryItem } from "@/app/types"
 import { format, parseISO } from "date-fns"
 import { Trip } from "@/app/types"
+import { Button } from "./Button"
 interface ItineraryItemsProps {
   itineraries: ItineraryItem[]
   trip: Trip | undefined
@@ -104,12 +105,10 @@ const ItineraryItems: React.FC<ItineraryItemsProps> = ({
   )
 
   const addIteneraryItemButton = (
-    <button
-      className="px-4 mt-8 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+    <Button
+      text="Add itenerary items"
       onClick={() => router.push(`${trip?.id}/itinerary/new`)}
-    >
-      Add itinerary items
-    </button>
+    />
   )
 
   return (
@@ -120,12 +119,10 @@ const ItineraryItems: React.FC<ItineraryItemsProps> = ({
           <IteneraryRowItem />
           <div className="flex space-x-4">
             <div>
-              <button
-                className="px-4 mt-8 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+              <Button
+                text="Edit itinerary items"
                 onClick={() => router.push(`${trip?.id}/edit/itinerary`)}
-              >
-                Edit itinerary items
-              </button>
+              />
             </div>
             <div>{addIteneraryItemButton}</div>
           </div>
