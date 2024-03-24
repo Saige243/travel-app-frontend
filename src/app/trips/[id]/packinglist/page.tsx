@@ -78,7 +78,7 @@ function PackingListPage() {
         <select
           value={filterCategory}
           onChange={(e) => setFilterCategory(e.target.value)}
-          className="mb-4 mr-4 p-1 roumd"
+          className="mb-4 mr-4 p-1 rounded-md dark:text-black"
         >
           <option value="ALL">Filter by Category</option>
           {Array.from(
@@ -93,7 +93,7 @@ function PackingListPage() {
         <select
           value={filterPacked}
           onChange={(e) => setFilterPacked(e.target.value)}
-          className="mb-4 p-1 rounded-md"
+          className="mb-4 p-1 rounded-md dark:text-black"
         >
           <option value="ALL">Show All</option>
           <option value="PACKED">Packed</option>
