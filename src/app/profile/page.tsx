@@ -3,6 +3,7 @@
 import React from "react"
 import { useRouter } from "next/navigation"
 import { useFetchUser } from "../_hooks/useFetchUser"
+import { Button } from "../_components/Button"
 
 function Profile() {
   const router = useRouter()
@@ -28,18 +29,11 @@ function Profile() {
         <p>Loading user information...</p>
       )}
       <div className="mt-4 space-x-2">
-        <button
-          onClick={() => router.back()}
-          className="px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700"
-        >
-          Back
-        </button>
-        <button
+        <Button text="Back" onClick={() => router.back()} />
+        <Button
+          text="Edit Profile"
           onClick={() => router.push("/profile/edit")}
-          className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-        >
-          Edit Profile
-        </button>
+        />
       </div>
     </div>
   )

@@ -6,6 +6,7 @@ import { useFetchUser } from "../_hooks/useFetchUser"
 import { useRouter } from "next/navigation"
 import { format, parseISO } from "date-fns"
 import { Trip } from "../types"
+import { Button } from "../_components/Button"
 
 function Dashboard() {
   const { soonestTrip, fetchSoonestTrip, isLoading, error } = useTripData()
@@ -41,22 +42,15 @@ function Dashboard() {
           <span>{formatDate(soonestTrip.end_date)}</span>
         </div>
         <div className="flex items-center text-center place-items-center content-center justify-center">
-          <button
-            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+          <Button
+            text="Go to trip"
             onClick={() => router.push(`trips/${soonestTrip.id}`)}
-          >
-            Go to trip
-          </button>
+          />
         </div>
       </div>
       <div className="py-12">
         <h2 className="pb-4">Want to add another?</h2>
-        <button
-          className="bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded"
-          onClick={() => router.push("/trips/new")}
-        >
-          Add a Trip
-        </button>
+        <Button text="Add a Trip" onClick={() => router.push("/trips/new")} />
       </div>
     </>
   )
@@ -69,12 +63,7 @@ function Dashboard() {
       ) : (
         <div>
           <p>No trips found - add one below!</p>
-          <button
-            className="bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 my-12 px-4 rounded"
-            onClick={() => router.push("/trips/new")}
-          >
-            Add a Trip
-          </button>
+          <Button text="Add a Trip" onClick={() => router.push("/trips/new")} />
         </div>
       )}
     </div>

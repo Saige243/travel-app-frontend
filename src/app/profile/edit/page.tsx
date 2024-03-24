@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { User } from "../types"
+import { Button } from "@/app/_components/Button"
 
 function ProfileEdit() {
   const [user, setUser] = useState<User | null>(null)
@@ -106,19 +107,8 @@ function ProfileEdit() {
             />
           </div>
           <div className="flex justify-between mt-6">
-            <button
-              type="submit"
-              className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-            >
-              Save Changes
-            </button>
-            <button
-              type="button"
-              onClick={() => router.back()}
-              className="px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700"
-            >
-              Cancel
-            </button>
+            <Button text="Save Changes" type="submit" />
+            <Button text="Cancel" onClick={() => router.back()} />
           </div>
         </form>
       ) : (

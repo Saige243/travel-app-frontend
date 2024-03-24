@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react"
 import { useRouter } from "next/navigation"
 import { useAuth } from "@/app/layout"
+import { Button } from "./Button"
 
 function Navbar() {
   const router = useRouter()
@@ -46,15 +47,10 @@ function Navbar() {
   return (
     <nav className="bg-blue-500 p-4 text-white flex justify-between items-center mb-12">
       <div className="font-semibold text-xl">
-        <button onClick={() => router.push("/dashboard")}>TravelApp</button>
+        <Button text="TravelApp" onClick={() => router.push("/dashboard")} />
       </div>
       <div>
-        <button
-          onClick={() => router.push("/trips")}
-          className="bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 mr-2 px-4 rounded"
-        >
-          My Trips
-        </button>
+        <Button text="My Trips" onClick={() => router.push("/trips")} />
         <div className="relative inline-block">
           <button
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
