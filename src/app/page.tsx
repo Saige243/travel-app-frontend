@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import Login from "./_components/LoginForm"
 import Signup from "./_components/SignupForm"
 import { useRouter } from "next/navigation"
-import { useAuth } from "@/app/layout"
+import { useAuth } from "@/app/_contexts/AuthContext"
 
 export default function Home() {
   const [isLoginView, setIsLoginView] = useState(true)

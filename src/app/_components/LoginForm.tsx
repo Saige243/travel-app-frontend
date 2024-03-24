@@ -1,6 +1,6 @@
 import { FormEvent } from "react"
 import { useRouter } from "next/navigation"
-import { useAuth } from "@/app/layout"
+import { useAuth } from "@/app/_contexts/AuthContext"
 import { Button } from "./Button"
 
 function LoginForm({ onSwitch }: { onSwitch: () => void }) {
