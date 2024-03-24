@@ -2,6 +2,7 @@
 
 import React, { useState, FormEvent } from "react"
 import { useRouter } from "next/navigation"
+import { Button } from "@/app/_components/Button"
 
 function NewTrip() {
   const [title, setTitle] = useState("")
@@ -104,12 +105,7 @@ function NewTrip() {
           required
         />
       </div>
-      <button
-        type="submit"
-        className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-      >
-        Plan Trip
-      </button>
+      <Button text="Plan trip" type="submit" />
     </form>
   )
 }

@@ -5,6 +5,7 @@ import { useParams, useRouter } from "next/navigation"
 import EditAccommodationsForm from "../../../_components/EditAccommodationsForm"
 import EditDetailsForm from "../../../_components/EditDetailsForm"
 import { useTripData } from "../../../_hooks/useTripData"
+import { Button } from "@/app/_components/Button"
 
 function EditTrip() {
   const { id } = useParams()
@@ -21,12 +22,10 @@ function EditTrip() {
       <EditDetailsForm trip={trip} />
       <EditAccommodationsForm trip={trip} />
       <div>
-        <button
+        <Button
+          text="Back to trip"
           onClick={() => router.push(`/trips/${id}`)}
-          className="bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 my-12 px-4 rounded"
-        >
-          Back to trip
-        </button>
+        />
       </div>
     </div>
   )

@@ -3,6 +3,7 @@
 import { useState, FormEvent, useEffect } from "react"
 import { useRouter, useParams } from "next/navigation"
 import { useTripData } from "../../../../_hooks/useTripData"
+import { Button } from "@/app/_components/Button"
 
 interface AccommodationFormState {
   name: string
@@ -159,12 +160,11 @@ export default function AddAccommodation() {
             rows={4}
           />
         </div>
-        <button
+        <Button
+          text="Add Accomondation"
           type="submit"
-          className="px-4 mt-8 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-        >
-          Add Accommodation
-        </button>
+          className="bg-green-600"
+        />
       </form>
     </div>
   )

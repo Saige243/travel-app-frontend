@@ -7,6 +7,7 @@ import { format, parseISO } from "date-fns"
 import PackingListTable from "@/app/_components/PackingListTable"
 import { ItineraryItem, Trip } from "@/app/types"
 import ItineraryItems from "@/app/_components/IteneraryItems"
+import { Button } from "@/app/_components/Button"
 
 type ItemsGroupedByDate = Record<string, ItineraryItem[]>
 
@@ -88,12 +89,10 @@ function TripID() {
         <div className="py-6">
           <div className="text-center py-6">
             <p className="text-xl">You have no accommodations!</p>
-            <button
-              className="px-4 mt-8 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+            <Button
+              text="Add accommodations"
               onClick={() => router.push(`${trip?.id}/accommodations/new`)}
-            >
-              Add accommodations
-            </button>
+            />
           </div>
         </div>
       )}
@@ -111,13 +110,10 @@ function TripID() {
         <div>{detailsBlock}</div>
         <div>{accomodationsBlock}</div>
       </div>
-      <button
-        className="px-4 mt-8 py-2 mb-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm"
+      <Button
+        text="Edit trip details"
         onClick={() => router.push(`${trip?.id}/edit`)}
-      >
-        Edit trip details
-      </button>
-
+      />
       <div className="py-8">
         <PackingListTable trip={trip} />
       </div>

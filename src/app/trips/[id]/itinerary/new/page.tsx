@@ -18,13 +18,10 @@ function AddItineraryItemForm() {
   return (
     <div>
       <IteneraryItemForm trip={trip} />
-      <button
-        type="button"
+      <Button
+        text="Back to trip"
         onClick={() => router.push(`/trips/${tripId}`)}
-        className="mt-8 bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
-      >
-        Back to trip
-      </button>
+      />
     </div>
   )
 }
