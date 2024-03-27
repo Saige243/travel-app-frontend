@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useEffect, useState } from "react"
+import React, { useEffect } from "react"
 import { useTripData } from "../_hooks/useTripData"
 import { useFetchUser } from "../_hooks/useFetchUser"
 import { useRouter } from "next/navigation"

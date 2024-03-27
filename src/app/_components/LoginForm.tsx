@@ -2,10 +2,29 @@ import { FormEvent } from "react"
 import { useRouter } from "next/navigation"
 import { useAuth } from "@/app/_contexts/AuthContext"
 import { Button } from "./Button"
+import toast, { Toaster } from "react-hot-toast"
 
 function LoginForm({ onSwitch }: { onSwitch: () => void }) {
   const router = useRouter()
   const { setIsAuthenticated } = useAuth()
+
+  async function loginUser(
+    email: FormDataEntryValue | null,
+    password: FormDataEntryValue | null
+  ) {
+    const response = await fetch("http://localhost:3001/users/sign_in", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ user: { email, password } }),
+      credentials: "include",
+    })
+    if (!response.ok) {
+      const errorData = await response.json()
+      throw new Error(errorData.errors[0])
+    }
+
+    return response.json()
+  }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -14,28 +33,19 @@ function LoginForm({ onSwitch }: { onSwitch: () => void }) {
     const email = formData.get("email")
     const password = formData.get("password")
 
-    const response = await fetch("http://localhost:3001/users/sign_in", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        user: {
-          email: email,
-          password: password,
-        },
-      }),
-      credentials: "include",
-    })
-
-    if (response.ok) {
+    try {
+      await loginUser(email, password)
       setIsAuthenticated(true)
       router.push("/dashboard")
-    } else {
-      console.error("Login failed", response)
+    } catch (error) {
+      console.error("Login failed", error)
+      toast.error(`Login failed: ${(error as Error).message}`)
     }
   }
 
   return (
     <div className="p-8 bg-white dark:bg-slate-400 shadow-md rounded-lg">
+      <Toaster />
       <h2 className="mb-6 text-center text-2xl font-bold dark:text-gray-700">
         Login
       </h2>
