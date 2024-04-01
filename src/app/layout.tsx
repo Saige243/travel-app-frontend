@@ -5,6 +5,7 @@ import Navbar from "./_components/Navbar"
 import React, { useEffect } from "react"
 import { useRouter, usePathname } from "next/navigation"
 import { AuthProvider, useAuth } from "./_contexts/AuthContext"
+import { ThemeProvider } from "./_contexts/ThemeContext"
 
 export default function RootLayout({
   children,
@@ -27,13 +28,15 @@ export default function RootLayout({
       : "min-h-screen dark:bg-slate-700 "
 
   return (
-    <AuthProvider>
-      <html lang="en">
-        <body className={mainBodyStyles}>
-          <Navbar />
-          <main className="lg:px-20 xl:px-72">{children}</main>
-        </body>
-      </html>
-    </AuthProvider>
+    <ThemeProvider>
+      <AuthProvider>
+        <html lang="en">
+          <body className={mainBodyStyles}>
+            <Navbar />
+            <main className="lg:px-20 xl:px-72">{children}</main>
+          </body>
+        </html>
+      </AuthProvider>
+    </ThemeProvider>
   )
 }
