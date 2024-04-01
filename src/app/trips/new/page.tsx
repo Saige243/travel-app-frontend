@@ -44,7 +44,7 @@ function NewTrip() {
       <div>
         <label
           htmlFor="title"
-          className="block text-sm font-medium text-gray-700"
+          className="block text-sm font-medium text-gray-700 dark:text-white"
         >
           Title
         </label>
@@ -53,14 +53,14 @@ function NewTrip() {
           id="title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          className="mt-1 p-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          className="mt-1 p-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:text-black"
           required
         />
       </div>
       <div>
         <label
           htmlFor="location"
-          className="block text-sm font-medium text-gray-700"
+          className="block text-sm font-medium text-gray-700 dark:text-white"
         >
           Location
         </label>
@@ -69,14 +69,14 @@ function NewTrip() {
           id="location"
           value={location}
           onChange={(e) => setLocation(e.target.value)}
-          className="mt-1 p-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          className="mt-1 p-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:text-black"
           required
         />
       </div>
       <div>
         <label
           htmlFor="date"
-          className="block text-sm font-medium text-gray-700"
+          className="block text-sm font-medium text-gray-700 dark:text-white"
         >
           Start Date
         </label>
@@ -85,14 +85,14 @@ function NewTrip() {
           id="date"
           value={startDate}
           onChange={(e) => setStartDate(e.target.value)}
-          className="mt-1 p-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          className="mt-1 p-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:text-black"
           required
         />
       </div>
       <div>
         <label
           htmlFor="date"
-          className="block text-sm font-medium text-gray-700"
+          className="block text-sm font-medium text-gray-700 dark:text-white"
         >
           End Date
         </label>
@@ -101,7 +101,7 @@ function NewTrip() {
           id="date"
           value={endDate}
           onChange={(e) => setEndDate(e.target.value)}
-          className="mt-1 p-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          className="mt-1 p-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:text-black"
           required
         />
       </div>
