@@ -108,7 +108,7 @@ function Navbar() {
               >
                 Logout
               </a>
-              <ThemeToggle />
+              {/* <ThemeToggle /> */}
             </div>
           )}
         </div>
