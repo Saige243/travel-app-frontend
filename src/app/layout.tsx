@@ -3,7 +3,7 @@
 import "./globals.css"
 import Navbar from "./_components/Navbar"
 import React, { useEffect } from "react"
-import { useRouter } from "next/navigation"
+import { useRouter, usePathname } from "next/navigation"
 import { AuthProvider, useAuth } from "./_contexts/AuthContext"
 
 export default function RootLayout({
@@ -12,13 +12,14 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   const router = useRouter()
+  const path = usePathname()
   const { isAuthenticated, isLoading } = useAuth()
 
-  // useEffect(() => {
-  //   if (!isLoading && !isAuthenticated) {
-  //     router.push("/")
-  //   }
-  // }, [isAuthenticated])
+  useEffect(() => {
+    if (path !== "/" && !isAuthenticated) {
+      router.push("/")
+    }
+  }, [isAuthenticated, isLoading])
 
   const mainBodyStyles =
     isAuthenticated && !isLoading

@@ -18,11 +18,9 @@ const AuthContext = createContext<AuthContextType>(defaultContextValue)
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
 
   const getUser = async () => {
-    setIsLoading(true)
-
     try {
       const url = `http://localhost:3001/auth/logged_in`
       const res = await fetch(url, {

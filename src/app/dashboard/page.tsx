@@ -7,13 +7,11 @@ import { useRouter } from "next/navigation"
 import { format, parseISO } from "date-fns"
 import { Trip } from "../types"
 import { Button } from "../_components/Button"
-import { useAuth } from "../_contexts/AuthContext"
 
 function Dashboard() {
   const { soonestTrip, fetchSoonestTrip, isLoading, error } = useTripData()
   const { userData } = useFetchUser()
   const router = useRouter()
-  const { isAuthenticated } = useAuth()
 
   useEffect(() => {
     fetchSoonestTrip()
