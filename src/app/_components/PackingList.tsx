@@ -132,7 +132,7 @@ function AddPackingListItemForm({ tripId }: { tripId: number }) {
               onChange={(e) =>
                 handleItemChange(index, "category", e.target.value, item.id)
               }
-              className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm dark:text-black"
             >
               <option value="">Select a category</option>
               {categories.map((category, catIndex) => (
@@ -162,7 +162,7 @@ function AddPackingListItemForm({ tripId }: { tripId: number }) {
                     item.id
                   )
                 }
-                className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm dark:text-black"
               />
               <Button
                 type="button"
