@@ -122,7 +122,7 @@ function EditAccommodationsForm({ trip }: { trip: Trip | null }) {
                   name="name"
                   value={acc.name}
                   onChange={(e) => handleAccommodationChange(index, e)}
-                  className="input input-bordered w-full p-2 rounded"
+                  className="input input-bordered w-full p-2 rounded dark:text-black"
                 />
               </div>
               <div className="md:w-1/2">
@@ -138,7 +138,7 @@ function EditAccommodationsForm({ trip }: { trip: Trip | null }) {
                     name="address"
                     value={acc.address}
                     onChange={(e) => handleAccommodationChange(index, e)}
-                    className="textarea textarea-bordered w-full p-2 rounded"
+                    className="textarea textarea-bordered w-full p-2 rounded dark:text-black"
                   />
                 </div>
               </div>
@@ -157,7 +157,7 @@ function EditAccommodationsForm({ trip }: { trip: Trip | null }) {
                   name="checkInDate"
                   value={acc.checkInDate}
                   onChange={(e) => handleAccommodationChange(index, e)}
-                  className="input input-bordered w-full p-2 rounded"
+                  className="input input-bordered w-full p-2 rounded dark:text-black"
                 />
               </div>
               <div className="mb-4 w-1/2">
@@ -173,7 +173,7 @@ function EditAccommodationsForm({ trip }: { trip: Trip | null }) {
                   name="checkOutDate"
                   value={acc.checkOutDate}
                   onChange={(e) => handleAccommodationChange(index, e)}
-                  className="input input-bordered w-full p-2 rounded"
+                  className="input input-bordered w-full p-2 rounded dark:text-black"
                 />
               </div>
             </div>
@@ -191,7 +191,7 @@ function EditAccommodationsForm({ trip }: { trip: Trip | null }) {
                   name="contactNumber"
                   value={acc.contactNumber}
                   onChange={(e) => handleAccommodationChange(index, e)}
-                  className="input input-bordered w-full p-2 rounded"
+                  className="input input-bordered w-full p-2 rounded dark:text-black"
                 />
               </div>
               <div className="mb-8 sm:w-1/2">
@@ -206,7 +206,7 @@ function EditAccommodationsForm({ trip }: { trip: Trip | null }) {
                   name="notes"
                   value={acc.notes}
                   onChange={(e) => handleAccommodationChange(index, e)}
-                  className="textarea textarea-bordered w-full p-2 rounded"
+                  className="textarea textarea-bordered w-full p-2 rounded dark:text-black"
                   rows={3}
                 />
               </div>

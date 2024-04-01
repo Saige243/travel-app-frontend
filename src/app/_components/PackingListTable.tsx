@@ -3,7 +3,6 @@ import { useRouter } from "next/navigation"
 import { PackingListItem, Trip } from "../types"
 import { Button } from "./Button"
 import toast, { Toaster } from "react-hot-toast"
-import { BadgeAlert } from "lucide-react"
 
 function PackingListTable({ trip }: { trip: Trip | null }) {
   const router = useRouter()

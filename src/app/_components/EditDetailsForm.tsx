@@ -78,7 +78,7 @@ function EditDetailsForm({ trip }: { trip: Trip | null }) {
               name="title"
               value={formData.title}
               onChange={handleChange}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2"
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 dark:text-black"
             />
           </div>
           <div className="sm:w-1/2">
@@ -94,7 +94,7 @@ function EditDetailsForm({ trip }: { trip: Trip | null }) {
               name="location"
               value={formData.location}
               onChange={handleChange}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2"
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 dark:text-black"
             />
           </div>
         </div>
@@ -112,7 +112,7 @@ function EditDetailsForm({ trip }: { trip: Trip | null }) {
               name="start_date"
               value={formData.start_date}
               onChange={handleChange}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2"
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 dark:text-black"
             />
           </div>
           <div className="pb-4 w-1/2">
@@ -128,7 +128,7 @@ function EditDetailsForm({ trip }: { trip: Trip | null }) {
               name="end_date"
               value={formData.end_date}
               onChange={handleChange}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2"
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 dark:text-black"
             />
           </div>
         </div>
@@ -144,7 +144,7 @@ function EditDetailsForm({ trip }: { trip: Trip | null }) {
             name="description"
             value={formData.description || ""}
             onChange={handleChange}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2"
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-2 dark:text-black"
             rows={3}
           ></textarea>
         </div>
