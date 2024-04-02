@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation"
 import { format, parseISO } from "date-fns"
 import { Trip } from "../types"
 import { Button } from "../_components/Button"
+import toast, { Toaster } from "react-hot-toast"
 
 function Dashboard() {
   const { soonestTrip, fetchSoonestTrip, isLoading, error } = useTripData()
@@ -17,7 +18,7 @@ function Dashboard() {
     fetchSoonestTrip()
   }, [])
 
-  if (isLoading) return <div>Loading...</div>
+  if (isLoading) return toast.loading("Loading...")
   if (error) return <div>Error: {error}</div>
 
   function formatDate(dateString: string) {
@@ -66,6 +67,7 @@ function Dashboard() {
           <Button text="Add a Trip" onClick={() => router.push("/trips/new")} />
         </div>
       )}
+      <Toaster />
     </div>
   )
 }
