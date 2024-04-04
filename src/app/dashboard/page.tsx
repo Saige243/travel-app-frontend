@@ -18,8 +18,15 @@ function Dashboard() {
     fetchSoonestTrip()
   }, [])
 
-  if (isLoading) return toast.loading("Loading...")
-  if (error) return <div>Error: {error}</div>
+  useEffect(() => {
+    if (isLoading) {
+      const loadingToast = toast.loading("Loading...")
+      return () => toast.dismiss(loadingToast)
+    }
+    if (error) {
+      toast.error(`Error: ${error}`)
+    }
+  }, [isLoading, error])
 
   function formatDate(dateString: string) {
     const date = parseISO(dateString)
