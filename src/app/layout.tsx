@@ -17,7 +17,9 @@ export default function RootLayout({
   const { isAuthenticated, isLoading } = useAuth()
 
   useEffect(() => {
-    if (path !== "/" && !isAuthenticated && !isLoading) {
+    console.log("layout path", path, isAuthenticated, isLoading)
+
+    if (path !== "/" && !isAuthenticated) {
       router.push("/")
     }
   }, [isAuthenticated, isLoading])
@@ -28,15 +30,15 @@ export default function RootLayout({
       : "min-h-screen dark:bg-slate-700 "
 
   return (
-    <ThemeProvider>
-      <AuthProvider>
+    <AuthProvider>
+      <ThemeProvider>
         <html lang="en">
           <body className={mainBodyStyles}>
             <Navbar />
             <main className="lg:px-20 xl:px-72">{children}</main>
           </body>
         </html>
-      </AuthProvider>
-    </ThemeProvider>
+      </ThemeProvider>
+    </AuthProvider>
   )
 }

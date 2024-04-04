@@ -37,6 +37,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       }
 
       const data = await res.json()
+      console.log("data", data)
       setIsAuthenticated(data.logged_in)
       setIsLoading(false)
     } catch (error) {
@@ -49,6 +50,15 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     getUser()
   }, [])
+
+  useEffect(() => {
+    console.log(
+      "new use effect: isAuthenticated",
+      isAuthenticated,
+      "isLoading",
+      isLoading
+    )
+  }, [isAuthenticated, isLoading])
 
   return (
     <AuthContext.Provider
