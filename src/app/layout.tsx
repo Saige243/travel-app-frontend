@@ -17,9 +17,7 @@ export default function RootLayout({
   const { isAuthenticated, isLoading } = useAuth()
 
   useEffect(() => {
-    console.log("layout path", path, isAuthenticated, isLoading)
-
-    if (path !== "/" && !isAuthenticated) {
+    if (path !== "/" && !isAuthenticated && !isLoading) {
       router.push("/")
     }
   }, [isAuthenticated, isLoading])

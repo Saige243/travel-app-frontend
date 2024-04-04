@@ -17,8 +17,11 @@ const defaultContextValue: AuthContextType = {
 const AuthContext = createContext<AuthContextType>(defaultContextValue)
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    const saved = localStorage.getItem("logged_in")
+    return saved ? JSON.parse(saved) : false
+  })
 
   const getUser = async () => {
     try {
@@ -37,8 +40,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       }
 
       const data = await res.json()
-      console.log("data", data)
       setIsAuthenticated(data.logged_in)
+      localStorage.setItem("logged_in", data.logged_in.toString())
       setIsLoading(false)
     } catch (error) {
       console.error("Failed to fetch authentication status", error)
@@ -50,15 +53,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     getUser()
   }, [])
-
-  useEffect(() => {
-    console.log(
-      "new use effect: isAuthenticated",
-      isAuthenticated,
-      "isLoading",
-      isLoading
-    )
-  }, [isAuthenticated, isLoading])
 
   return (
     <AuthContext.Provider
