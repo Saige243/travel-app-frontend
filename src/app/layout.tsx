@@ -16,11 +16,11 @@ export default function RootLayout({
   const path = usePathname()
   const { isAuthenticated, isLoading } = useAuth()
 
-  useEffect(() => {
-    if (path !== "/" && !isAuthenticated && !isLoading) {
-      router.push("/")
-    }
-  }, [isAuthenticated, isLoading])
+  // useEffect(() => {
+  //   if (path !== "/" && !isAuthenticated && !isLoading) {
+  //     router.push("/")
+  //   }
+  // }, [isAuthenticated, isLoading])
 
   const mainBodyStyles =
     isAuthenticated && !isLoading

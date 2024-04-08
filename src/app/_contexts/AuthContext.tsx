@@ -18,10 +18,11 @@ const AuthContext = createContext<AuthContextType>(defaultContextValue)
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [isLoading, setIsLoading] = useState(true)
-  const [isAuthenticated, setIsAuthenticated] = useState(() => {
-    const saved = localStorage.getItem("logged_in")
-    return saved ? JSON.parse(saved) : false
-  })
+  // const [isAuthenticated, setIsAuthenticated] = useState(() => {
+  //   const saved = localStorage.getItem("logged_in")
+  //   return saved ? JSON.parse(saved) : false
+  // })
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
 
   const getUser = async () => {
     try {

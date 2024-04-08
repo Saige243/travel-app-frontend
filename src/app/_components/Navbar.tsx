@@ -64,7 +64,11 @@ function Navbar() {
         <Button text="TravelApp" onClick={() => router.push("/dashboard")} />
       </div>
       <div>
-        <Button text="My Trips" onClick={() => router.push("/trips")} />
+        <Button
+          text="My Trips"
+          onClick={() => router.push("/trips")}
+          className="mr-2"
+        />
         <div className="relative inline-block">
           <button
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
