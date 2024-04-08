@@ -18,11 +18,7 @@ const AuthContext = createContext<AuthContextType>(defaultContextValue)
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [isLoading, setIsLoading] = useState(true)
-  // const [isAuthenticated, setIsAuthenticated] = useState(() => {
-  //   const saved = localStorage.getItem("logged_in")
-  //   return saved ? JSON.parse(saved) : false
-  // })
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null)
 
   const getUser = async () => {
     try {
@@ -53,6 +49,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     getUser()
+
+    // TODO: white screen removed because we're waiting for the window object to load?
+    const storedLoggedIn = localStorage.getItem("logged_in")
+    if (storedLoggedIn !== null) {
+      const isAuth = JSON.parse(storedLoggedIn)
+      setIsAuthenticated(isAuth)
+    }
   }, [])
 
   return (
