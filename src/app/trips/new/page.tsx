@@ -3,6 +3,7 @@
 import React, { useState, FormEvent } from "react"
 import { useRouter } from "next/navigation"
 import { Button } from "@/app/_components/Button"
+import toast from "react-hot-toast"
 
 function NewTrip() {
   const [title, setTitle] = useState("")
@@ -28,7 +29,7 @@ function NewTrip() {
     })
 
     if (res.ok) {
-      alert("Trip planned successfully")
+      toast.success("Trip planned successfully!")
       router.back()
     } else {
       console.error("Failed to plan trip")
