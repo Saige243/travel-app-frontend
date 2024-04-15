@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation"
 import { format, parseISO } from "date-fns"
 import { Trip } from "../types"
 import { Button } from "../_components/Button"
-import toast, { Toaster } from "react-hot-toast"
+import toast from "react-hot-toast"
 
 function Dashboard() {
   const { soonestTrip, fetchSoonestTrip, isLoading, error } = useTripData()
@@ -74,7 +74,6 @@ function Dashboard() {
           <Button text="Add a Trip" onClick={() => router.push("/trips/new")} />
         </div>
       )}
-      <Toaster />
     </div>
   )
 }

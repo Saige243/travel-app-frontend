@@ -5,6 +5,7 @@ import { useRouter, useParams } from "next/navigation"
 import { Trip, PackingListItem } from "../../../types"
 import { useTripData } from "../../../_hooks/useTripData"
 import { Button } from "@/app/_components/Button"
+import toast from "react-hot-toast"
 
 function PackingListPage() {
   const router = useRouter()
@@ -55,7 +56,7 @@ function PackingListPage() {
         )
       )
 
-      alert("Failed to update the packing status. Please try again.")
+      toast.error("Failed to update the packing status. Please try again.")
     }
   }
 

@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { Accommodation } from "../types"
 import { Button } from "./Button"
+import toast from "react-hot-toast"
 
 interface AccommodationFormState {
   id: string
@@ -92,9 +93,9 @@ function EditAccommodationsForm({ trip }: { trip: Trip | null }) {
 
     if (response.ok) {
       console.log("Accommodation updated successfully")
-      alert("Accommodation updated successfully!")
+      toast.success("Accommodation updated successfully!")
     } else {
-      alert("Failed to update accommodation. Please try again.")
+      toast.error("Failed to update accommodation. Please try again.")
     }
   }
 

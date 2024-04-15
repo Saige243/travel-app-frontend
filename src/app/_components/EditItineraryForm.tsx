@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react"
 import { Trip, ItineraryItem } from "../types"
 import { useRouter } from "next/navigation"
 import { Button } from "./Button"
+import toast from "react-hot-toast"
 
 function EditItineraryForm({ trip }: { trip: Trip | null }) {
   const router = useRouter()
@@ -50,7 +51,7 @@ function EditItineraryForm({ trip }: { trip: Trip | null }) {
     e.preventDefault()
 
     if (!trip || !trip.start_date || !trip.end_date) {
-      alert("Trip dates are not defined.")
+      toast("Trip dates are not defined.", { icon: "⚠️" })
       return
     }
 
@@ -60,8 +61,9 @@ function EditItineraryForm({ trip }: { trip: Trip | null }) {
     for (const item of itineraryItems) {
       const itemDate = new Date(item.date)
       if (itemDate < startDate || itemDate > endDate) {
-        alert(
-          `All itinerary items must fit within the trip date range. ${trip.start_date} - ${trip.end_date}`
+        toast(
+          `All itinerary items must fit within the trip date range. ${trip.start_date} - ${trip.end_date}`,
+          { icon: "⚠️" }
         )
         return
       }
@@ -86,7 +88,7 @@ function EditItineraryForm({ trip }: { trip: Trip | null }) {
 
       if (!res.ok) {
         console.error("Failed to save itinerary item", res)
-        alert("Failed to save itinerary item. Please try again.")
+        toast.error("Failed to save itinerary item. Please try again.")
       }
 
       return res.json()
@@ -96,11 +98,11 @@ function EditItineraryForm({ trip }: { trip: Trip | null }) {
         await saveIteneraryItem(item)
       }
 
-      alert("Itinerary saved!")
+      toast.success("Itinerary saved!")
       router.push(`/trips/${trip?.id}`)
     } catch (error) {
       console.error("Failed to save itinerary", error)
-      alert("Failed to save itinerary. Please try again.")
+      toast.error("Failed to save itinerary. Please try again.")
     }
   }
 
@@ -124,10 +126,10 @@ function EditItineraryForm({ trip }: { trip: Trip | null }) {
 
       if (!response.ok) throw new Error("Network response was not ok.")
 
-      alert("Itinerary item deleted!")
+      toast.success("Itinerary item deleted!")
     } catch (error) {
       console.error("Failed to delete item", error)
-      alert("Failed to delete item. Please try again.")
+      toast.error("Failed to delete item. Please try again.")
     }
 
     const newItineraryItems = itineraryItems.filter(

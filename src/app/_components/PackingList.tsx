@@ -6,6 +6,7 @@ import { useTripData } from "../_hooks/useTripData"
 import { useRouter } from "next/navigation"
 import { v4 as uuidv4 } from "uuid"
 import { Button } from "./Button"
+import toast from "react-hot-toast"
 interface PackingListItem {
   category: string
   description: string
@@ -105,7 +106,7 @@ function AddPackingListItemForm({ tripId }: { tripId: number }) {
     try {
       await Promise.all(saveOperations)
 
-      alert("Packing list saved successfully!")
+      toast.success("Packing list saved successfully!")
       router.push(`/trips/${tripId}`)
     } catch (error) {
       console.error("Failed to save item:", error)

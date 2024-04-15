@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { Trip } from "../types"
 import { Button } from "./Button"
+import toast from "react-hot-toast"
 
 function EditDetailsForm({ trip }: { trip: Trip | null }) {
   const router = useRouter()
@@ -50,7 +51,7 @@ function EditDetailsForm({ trip }: { trip: Trip | null }) {
     })
 
     if (res.ok) {
-      alert("Details updated successfully!")
+      toast.success("Details updated successfully!")
     } else {
       console.error("Failed to update trip")
     }

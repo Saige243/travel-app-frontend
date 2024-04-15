@@ -2,7 +2,7 @@ import { FormEvent } from "react"
 import { useRouter } from "next/navigation"
 import { useAuth } from "@/app/_contexts/AuthContext"
 import { Button } from "./Button"
-import toast, { Toaster } from "react-hot-toast"
+import toast from "react-hot-toast"
 
 function LoginForm({ onSwitch }: { onSwitch: () => void }) {
   const router = useRouter()
@@ -45,7 +45,6 @@ function LoginForm({ onSwitch }: { onSwitch: () => void }) {
 
   return (
     <div className="p-8 bg-white dark:bg-slate-400 shadow-md rounded-lg">
-      <Toaster />
       <h2 className="mb-6 text-center text-2xl font-bold dark:text-gray-700">
         Login
       </h2>

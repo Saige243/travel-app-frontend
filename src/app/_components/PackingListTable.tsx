@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import { useRouter } from "next/navigation"
 import { PackingListItem, Trip } from "../types"
 import { Button } from "./Button"
-import toast, { Toaster } from "react-hot-toast"
+import toast from "react-hot-toast"
 
 function PackingListTable({ trip }: { trip: Trip | null }) {
   const router = useRouter()
@@ -51,7 +51,6 @@ function PackingListTable({ trip }: { trip: Trip | null }) {
 
   const filteredTable = (
     <>
-      <Toaster />
       <div className="py-2 grid grid-cols-3 justify-center items-center text-lg">
         <h2 className="px-2 font-bold">Category</h2>
         <h2 className="px-2 font-bold">Item</h2>

@@ -4,6 +4,7 @@ import React, { useState } from "react"
 import { Trip, ItineraryItem } from "../types"
 import { useRouter } from "next/navigation"
 import { Button } from "./Button"
+import toast from "react-hot-toast"
 
 function AddItineraryItemForm({ trip }: { trip: Trip | null }) {
   const router = useRouter()
@@ -52,7 +53,7 @@ function AddItineraryItemForm({ trip }: { trip: Trip | null }) {
     e.preventDefault()
 
     if (!trip || !trip.start_date || !trip.end_date) {
-      alert("Trip dates are not defined.")
+      toast.error("Trip dates are not defined.")
       return
     }
 
@@ -62,8 +63,9 @@ function AddItineraryItemForm({ trip }: { trip: Trip | null }) {
     for (const item of itineraryItems) {
       const itemDate = new Date(item.date)
       if (itemDate < startDate || itemDate > endDate) {
-        alert(
-          `All itinerary items must fit within the trip date range. ${trip.start_date} - ${trip.end_date}`
+        toast(
+          `All itinerary items must fit within the trip date range. ${trip.start_date} - ${trip.end_date}`,
+          { icon: "⚠️" }
         )
         return
       }
@@ -94,11 +96,11 @@ function AddItineraryItemForm({ trip }: { trip: Trip | null }) {
 
       if (!response.ok) throw new Error("Network response was not ok.")
 
-      alert("Itinerary updated!")
+      toast.success("Itinerary updated!")
       router.push(`/trips/${trip?.id}`)
     } catch (error) {
       console.error("Failed to update item", error)
-      alert("Failed to add items. Please try again.")
+      toast.error("Failed to add items. Please try again.")
     }
   }
 

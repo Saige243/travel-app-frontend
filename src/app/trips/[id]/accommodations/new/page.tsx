@@ -4,6 +4,7 @@ import { useState, FormEvent, useEffect } from "react"
 import { useRouter, useParams } from "next/navigation"
 import { useTripData } from "../../../../_hooks/useTripData"
 import { Button } from "@/app/_components/Button"
+import toast from "react-hot-toast"
 
 interface AccommodationFormState {
   name: string
@@ -59,10 +60,10 @@ export default function AddAccommodation() {
     )
 
     if (response.ok) {
-      alert("Accommodation added successfully!")
+      toast.success("Accommodation added successfully!")
       router.back()
     } else {
-      alert("Failed to add accommodation")
+      toast.error("Failed to add accommodation")
     }
   }
 
