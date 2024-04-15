@@ -37,6 +37,7 @@ function LoginForm({ onSwitch }: { onSwitch: () => void }) {
       await loginUser(email, password)
       setIsAuthenticated(true)
       router.push("/dashboard")
+      toast.success("Login successful")
     } catch (error) {
       console.error("Login failed", error)
       toast.error(`Login failed: ${(error as Error).message}`)

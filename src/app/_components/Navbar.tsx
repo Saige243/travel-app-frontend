@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation"
 import { useAuth } from "@/app/_contexts/AuthContext"
 import { Button } from "./Button"
 import { useTheme } from "@/app/_contexts/ThemeContext"
+import toast from "react-hot-toast"
 
 function Navbar() {
   const router = useRouter()
@@ -22,6 +23,7 @@ function Navbar() {
       setIsAuthenticated(false)
       setIsDropdownOpen(false)
       router.push("/")
+      toast.success("Logout successful")
     } else {
       console.error("Logout failed")
       setIsDropdownOpen(false)
