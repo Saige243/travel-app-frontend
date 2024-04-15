@@ -126,7 +126,12 @@ function SignupForm({ onSwitch }: { onSwitch: () => void }) {
         </div>
       </form>
       <div className="mt-4 text-center">
-        Already have an account? <Button text="Login" onClick={onSwitch} />
+        Already have an account?{" "}
+        <Button
+          text="Login"
+          onClick={onSwitch}
+          className="border-none bg-transparent shadow-none text-blue-500 hover:underline hover:bg-transparent focus-none focus:border-0 active:border-0"
+        />
       </div>
     </div>
   )

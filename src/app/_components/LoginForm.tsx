@@ -88,7 +88,11 @@ function LoginForm({ onSwitch }: { onSwitch: () => void }) {
       </form>
       <div className="mt-4 text-center">
         Don&apos;t have an account?
-        <Button text="Sign Up" onClick={onSwitch} />
+        <Button
+          text="Sign Up"
+          onClick={onSwitch}
+          className="border-none bg-transparent shadow-none text-blue-500 hover:underline hover:bg-transparent focus-none focus:border-0 active:border-0"
+        />
       </div>
     </div>
   )
