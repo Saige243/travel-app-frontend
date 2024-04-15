@@ -46,8 +46,6 @@ function PackingListPage() {
       })
 
       if (!response.ok) throw new Error("Network response was not ok.")
-
-      console.log("Item updated successfully", await response.json())
     } catch (error) {
       console.error("Failed to update item", error)
       setPackingListItems(
