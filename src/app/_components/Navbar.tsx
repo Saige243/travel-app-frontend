@@ -21,6 +21,7 @@ function Navbar() {
 
     if (res.ok) {
       setIsAuthenticated(false)
+      localStorage.removeItem("jwt")
       setIsDropdownOpen(false)
       router.push("/")
       toast.success("Logout successful")

@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react"
 import { useRouter, useParams } from "next/navigation"
-import { Trip, PackingListItem } from "../../../types"
+import { PackingListItem } from "../../../types"
 import { useTripData } from "../../../_hooks/useTripData"
 import { Button } from "@/app/_components/Button"
 import toast from "react-hot-toast"

@@ -3,28 +3,11 @@ import { useRouter } from "next/navigation"
 import { useAuth } from "@/app/_contexts/AuthContext"
 import { Button } from "./Button"
 import toast from "react-hot-toast"
+import { loginUser } from "../services/login"
 
 function LoginForm({ onSwitch }: { onSwitch: () => void }) {
   const router = useRouter()
   const { setIsAuthenticated } = useAuth()
-
-  async function loginUser(
-    email: FormDataEntryValue | null,
-    password: FormDataEntryValue | null
-  ) {
-    const response = await fetch("http://localhost:3001/users/sign_in", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ user: { email, password } }),
-      credentials: "include",
-    })
-    if (!response.ok) {
-      const errorData = await response.json()
-      throw new Error(errorData.errors[0])
-    }
-
-    return response.json()
-  }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
