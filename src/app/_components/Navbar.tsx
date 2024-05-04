@@ -2,6 +2,8 @@
 
 import { useState, useEffect, useRef } from "react"
 import { useRouter } from "next/navigation"
+import { usePathname } from "next/navigation"
+
 import { useAuth } from "@/app/_contexts/AuthContext"
 import { Button } from "./Button"
 import { useTheme } from "@/app/_contexts/ThemeContext"
@@ -9,9 +11,10 @@ import toast from "react-hot-toast"
 
 function Navbar() {
   const router = useRouter()
+  const pathName = usePathname()
+  const { setIsAuthenticated } = useAuth()
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const dropdownRef = useRef(null)
-  const { isAuthenticated, setIsAuthenticated } = useAuth()
 
   async function logout() {
     const res = await fetch("http://localhost:3001/users/sign_out", {
@@ -46,7 +49,9 @@ function Navbar() {
     }
   }, [])
 
-  if (!isAuthenticated) return null
+  if (pathName === "/") {
+    return
+  }
 
   const ThemeToggle = () => {
     const { theme, toggleTheme } = useTheme()
