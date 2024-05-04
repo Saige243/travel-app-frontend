@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation"
 import { useAuth } from "@/app/_contexts/AuthContext"
 import { Button } from "./Button"
 import { useTheme } from "@/app/_contexts/ThemeContext"
+import { logout } from "../services/login"
 import toast from "react-hot-toast"
 
 function Navbar() {
@@ -16,11 +17,8 @@ function Navbar() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const dropdownRef = useRef(null)
 
-  async function logout() {
-    const res = await fetch("http://localhost:3001/users/sign_out", {
-      method: "DELETE",
-      credentials: "include",
-    })
+  async function handleLogout() {
+    const res = await logout()
 
     if (res.ok) {
       setIsAuthenticated(false)
@@ -116,7 +114,7 @@ function Navbar() {
               <a
                 href="#"
                 className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-500 hover:text-white"
-                onClick={logout}
+                onClick={handleLogout}
               >
                 Logout
               </a>

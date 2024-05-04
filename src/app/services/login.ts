@@ -23,3 +23,12 @@ export async function loginUser(
 
   return responseData
 }
+
+export async function logout() {
+  const res = await fetch("http://localhost:3001/users/sign_out", {
+    method: "DELETE",
+    credentials: "include",
+  })
+
+  return res
+}
